@@ -1,1 +1,15 @@
 @import url('./main-layout.css');
+
+@import url('./views/home-view.css');
+
+/* 
+Global style values
+---------------------
+Important to note to put the '!important' flag here'
+*/
+
+:root 
+{
+  --lumo-primary-color: rgba(0, 204, 102) !important;
+  --lumo-primary-text-color : rgba(0, 204, 102) !important;
+}
