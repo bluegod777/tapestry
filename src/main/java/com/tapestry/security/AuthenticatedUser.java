@@ -2,6 +2,7 @@ package com.tapestry.security;
 
 import java.util.Optional;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.tapestry.data.entity.User;
@@ -27,10 +28,14 @@ public class AuthenticatedUser
 	// @Transactional
 	public Optional<User> get()
 	{
-		System.out.println("We are here!");
-		// return this.authenticationContext.getAuthenticatedUser(UserDetails.class).map(userDetails -> this.userRepository.findByUsername(userDetails.getUsername()).orElseGet(() -> null));
+		switch (this.authenticationContext.getAuthenticatedUser(UserDetails.class).get().getUsername())
+		{
+		case "parent":
+			return Optional.of(User.builder().firstName("Sally").lastName("Parent").email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").build());
 
-		return null;
+		default:
+			return Optional.of(null);
+		}
 	}
 
 	public void logout()

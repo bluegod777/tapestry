@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
 
 		// Load user details from your data source (e.g., database)
 		// For simplicity, a hard-coded user is used here
-		return User.withUsername("user").password("user") // {noop} for plain text (don't use in production)
+		return User.withUsername("parent").password("parent") // {noop} for plain text (don't use in production)
 				.roles("USER", "ADMIN").build();
 	}
 }
