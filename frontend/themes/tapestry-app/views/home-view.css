@@ -1,3 +1,6 @@
+/*
+* Home View stuff
+*/
 .home-view 
 {
 	/* background: linear-gradient(to bottom, #000080, #006400); */
@@ -21,9 +24,6 @@
 	padding-right : var(--lumo-space-s);
 }
 
-/*
-* Consumer stuff
-*/
 .home-view .img-consumer-large {
   border-radius: 50%;
   flex-shrink: 0;
@@ -48,6 +48,9 @@
   width: 75px;
 }
 
+/*
+* Consumer stuff
+*/
 .consumer-tag-line
 {
 	font-style: italic;

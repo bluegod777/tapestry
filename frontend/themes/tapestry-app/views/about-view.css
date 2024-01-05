@@ -1,0 +1,15 @@
+/*
+* About View stuff
+*/
+.about-view 
+{
+	/* background: linear-gradient(to bottom, #000080, #006400); */
+}
+
+.about-view .img-avatar 
+{
+  flex-shrink: 0;
+  margin-right: calc(var(--lumo-space-s) * 1.5);
+  max-width : 100%;
+  height: auto;
+}

@@ -11,6 +11,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.tapestry.views.login.LoginSignupView;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 
+@SuppressWarnings("deprecation")
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends VaadinWebSecurity
@@ -24,6 +25,7 @@ public class SecurityConfiguration extends VaadinWebSecurity
 		return NoOpPasswordEncoder.getInstance();
 	}
 
+	@SuppressWarnings("removal")
 	@Override
 	protected void configure(HttpSecurity http) throws Exception
 	{
