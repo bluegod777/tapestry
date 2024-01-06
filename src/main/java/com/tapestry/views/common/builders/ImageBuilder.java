@@ -4,8 +4,15 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
+// -------------------------------------------------------------------
+// Some standard locations
+// ------------------------
+// https://webdav-001.ayt360.org/repository/public/tapestry.com/avatars/fun-3d-cartoon-white-labrador-retriever_183364-118249.avif
+// -------------------------------------------------------------------
 public class ImageBuilder
 {
+	public static final String ROOT = "https://webdav-001.ayt360.org/repository/public/tapestry.com/";
+
 	private final VerticalLayout wrapper;
 	private Image image;
 
@@ -31,6 +38,11 @@ public class ImageBuilder
 		this.image.getStyle().set("align-self", "center");
 
 		return this;
+	}
+
+	public ImageBuilder urlRelative(final String url, final String alt)
+	{
+		return this.url(ImageBuilder.ROOT + url, alt);
 	}
 
 	public ImageBuilder url(final String url, final String alt)

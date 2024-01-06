@@ -7,8 +7,9 @@ import com.tapestry.data.repositories.TapestryRepository;
 import com.tapestry.security.AuthenticatedUser;
 import com.tapestry.views.MainLayout;
 import com.tapestry.views.common.builders.ButtonBuilder;
-import com.tapestry.views.common.builders.HtmlLabelBuilder;
 import com.tapestry.views.common.builders.VerticalLayoutBuilder;
+import com.tapestry.views.common.cards.user.UserDetailCard;
+import com.tapestry.views.common.cards.user.UserSummaryCard;
 import com.tapestry.views.common.views.TapestryRouterViewSkeleton;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.board.Board;
@@ -70,10 +71,11 @@ public class DashboardView extends TapestryRouterViewSkeleton<DashboardView> imp
 	{
 		var outer = VerticalLayoutBuilder.create().tight().build();
 
-		FlipCard flipper = new FlipCard(HtmlLabelBuilder.create().text(this.getUserFullName()).build(), HtmlLabelBuilder.create().text("Owner Details").build(), FlipCardVariant.CLICK);
+		FlipCard flipper = new FlipCard(new UserSummaryCard(this.getTapestryUser(), this.getAuthenticatedUser(), this.getRepository()), new UserDetailCard(this.getTapestryUser(), this.getAuthenticatedUser(), this.getRepository()), FlipCardVariant.CLICK);
+		flipper.setHeight("200px");
 		flipper.setWidth("100%");
 
-		var card = VerticalLayoutBuilder.create().yellow().build();
+		var card = VerticalLayoutBuilder.create().build();
 		card.add(flipper);
 
 		outer.add(card);
@@ -85,10 +87,11 @@ public class DashboardView extends TapestryRouterViewSkeleton<DashboardView> imp
 	{
 		var outer = VerticalLayoutBuilder.create().tight().build();
 
-		FlipCard flipper = new FlipCard(HtmlLabelBuilder.create().text(relationship.getFullName()).build(), HtmlLabelBuilder.create().text("Owner Details").build(), FlipCardVariant.CLICK);
+		FlipCard flipper = new FlipCard(new UserSummaryCard(relationship, this.getAuthenticatedUser(), this.getRepository()), new UserDetailCard(relationship, this.getAuthenticatedUser(), this.getRepository()), FlipCardVariant.CLICK);
+		flipper.setHeight("200px");
 		flipper.setWidth("100%");
 
-		var card = VerticalLayoutBuilder.create().green().build();
+		var card = VerticalLayoutBuilder.create().build();
 		card.add(flipper);
 
 		outer.add(card);

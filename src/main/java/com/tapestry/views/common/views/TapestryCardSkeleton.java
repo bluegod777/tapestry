@@ -1,9 +1,9 @@
-package com.tapestry.views.common.components;
+package com.tapestry.views.common.views;
 
 import com.tapestry.data.repositories.TapestryRepository;
 import com.tapestry.security.AuthenticatedUser;
 import com.tapestry.views.common.builders.HtmlLabelBuilder;
-import com.tapestry.views.common.views.TapestryRouterViewSkeleton;
+import com.tapestry.views.common.components.HtmlLabel;
 import com.vaadin.flow.component.Component;
 
 public abstract class TapestryCardSkeleton<T> extends TapestryRouterViewSkeleton<TapestryCardSkeleton<T>>

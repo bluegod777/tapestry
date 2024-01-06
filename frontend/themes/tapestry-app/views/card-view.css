@@ -1,0 +1,12 @@
+.user-summary-card
+{
+	
+}
+
+.user-summary-card .profile-image
+{
+  flex-shrink: 0;
+  margin-right: calc(var(--lumo-space-s) * 1.5);
+  width: 100px;
+  height: auto;
+}

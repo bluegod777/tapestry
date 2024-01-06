@@ -44,7 +44,7 @@ public class User extends AbstractEntity
 
 	private Set<UserRole> roles;
 
-	private byte[] profilePicture;
+	private String profilePictureUrl;
 
 	@Builder.Default
 	private List<User> children = new ArrayList<>();;

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tapestry.data.entity.User;
 import com.tapestry.utils.CalendarUtils;
+import com.tapestry.views.common.builders.ImageBuilder;
 
 import lombok.Getter;
 
@@ -29,7 +30,7 @@ public class TapestryRepository
 	// -------------------------------------------------------------------
 	public static User getParent()
 	{
-		User parent = User.builder().firstName("Sally").lastName("Parent").email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").build();
+		User parent = User.builder().firstName("Sally").lastName("Parent").email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/super-mom.jpg").build();
 
 		parent.getChildren().add(TapestryRepository.getChildPreTeem());
 		parent.getChildren().add(TapestryRepository.getChildTeen());
@@ -40,21 +41,21 @@ public class TapestryRepository
 
 	public static User getChildPreTeem()
 	{
-		User parent = User.builder().firstName("Johnnie").lastName("Child").birthdate(CalendarUtils.getInstance(2015, 1, 3)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").build();
+		User parent = User.builder().firstName("Johnnie").lastName("Child").birthdate(CalendarUtils.getInstance(2015, 1, 3)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/son-preteen.jpg").build();
 
 		return parent;
 	}
 
 	public static User getChildTeen()
 	{
-		User parent = User.builder().firstName("Dee").lastName("Child").birthdate(CalendarUtils.getInstance(2007, 5, 7)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").build();
+		User parent = User.builder().firstName("Dee").lastName("Child").birthdate(CalendarUtils.getInstance(2007, 5, 7)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/daughter-teen.jpg").build();
 
 		return parent;
 	}
 
 	public static User getChildYoungAdult()
 	{
-		User parent = User.builder().firstName("Ryan").lastName("Child").birthdate(CalendarUtils.getInstance(1999, 8, 16)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").build();
+		User parent = User.builder().firstName("Ryan").lastName("Child").birthdate(CalendarUtils.getInstance(1999, 8, 16)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/son-young-adult.jpg").build();
 
 		return parent;
 	}
