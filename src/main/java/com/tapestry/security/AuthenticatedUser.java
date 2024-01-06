@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.tapestry.data.entity.User;
+import com.tapestry.data.repositories.TapestryRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 
 @Component
@@ -31,7 +32,7 @@ public class AuthenticatedUser
 		switch (this.authenticationContext.getAuthenticatedUser(UserDetails.class).get().getUsername())
 		{
 		case "parent":
-			return Optional.of(User.builder().firstName("Sally").lastName("Parent").email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").build());
+			return Optional.of(TapestryRepository.getParent());
 
 		default:
 			return Optional.of(null);

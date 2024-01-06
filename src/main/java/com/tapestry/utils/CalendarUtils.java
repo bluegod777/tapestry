@@ -1,6 +1,9 @@
 package com.tapestry.utils;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 public final class CalendarUtils
@@ -35,5 +38,18 @@ public final class CalendarUtils
 
 		// Print the formatted string
 		return formattedDateTime;
+	}
+
+	public static OffsetDateTime getInstance(final int year, final int month, final int day)
+	{
+		// Specify the date, time, and time zone offset
+		LocalDate date = LocalDate.of(year, month, day);
+		LocalTime time = LocalTime.of(0, 0); // Midnight
+		ZoneOffset offset = ZoneOffset.UTC; // or any other offset you desire
+
+		// Create OffsetDateTime
+		OffsetDateTime offsetDateTime = OffsetDateTime.of(date, time, offset);
+
+		return offsetDateTime;
 	}
 }

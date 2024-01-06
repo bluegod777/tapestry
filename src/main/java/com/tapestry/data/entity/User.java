@@ -1,5 +1,8 @@
 package com.tapestry.data.entity;
 
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,6 +36,9 @@ public class User extends AbstractEntity
 	@NotNull
 	private String mobilePhoneNumber;
 
+	@NotNull
+	private OffsetDateTime birthdate;
+
 	@JsonIgnore
 	private String hashedPassword;
 
@@ -40,7 +46,15 @@ public class User extends AbstractEntity
 
 	private byte[] profilePicture;
 
+	@Builder.Default
+	private List<User> children = new ArrayList<>();;
+
 	// -------------------------------------------------------------------
 	// Our stuff
 	// -------------------------------------------------------------------
+	public String getFullName()
+	{
+		return String.format("%s %s", this.getFirstName(), this.getLastName());
+
+	}
 }

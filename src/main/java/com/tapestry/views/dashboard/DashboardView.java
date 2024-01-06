@@ -1,5 +1,8 @@
 package com.tapestry.views.dashboard;
 
+import com.flowingcode.vaadin.addons.flipcard.FlipCard;
+import com.flowingcode.vaadin.addons.flipcard.FlipCard.FlipCardVariant;
+import com.tapestry.data.entity.User;
 import com.tapestry.data.repositories.TapestryRepository;
 import com.tapestry.security.AuthenticatedUser;
 import com.tapestry.views.MainLayout;
@@ -44,9 +47,7 @@ public class DashboardView extends TapestryRouterViewSkeleton<DashboardView> imp
 		board.add(ownerRow);
 
 		Row relationshipRow = new Row();
-		relationshipRow.add(this.getRelationshipCard());
-		relationshipRow.add(this.getRelationshipCard());
-		relationshipRow.add(this.getRelationshipCard());
+		this.getTapestryUser().getChildren().forEach(c -> relationshipRow.add(this.getRelationshipCard(c)));
 		board.add(relationshipRow);
 
 		Row addRow = new Row();
@@ -69,20 +70,26 @@ public class DashboardView extends TapestryRouterViewSkeleton<DashboardView> imp
 	{
 		var outer = VerticalLayoutBuilder.create().tight().build();
 
-		var card = VerticalLayoutBuilder.create().yellow().margin(true).build();
-		card.add(HtmlLabelBuilder.create().text("Owner").build());
+		FlipCard flipper = new FlipCard(HtmlLabelBuilder.create().text(this.getUserFullName()).build(), HtmlLabelBuilder.create().text("Owner Details").build(), FlipCardVariant.CLICK);
+		flipper.setWidth("100%");
+
+		var card = VerticalLayoutBuilder.create().yellow().build();
+		card.add(flipper);
 
 		outer.add(card);
 
 		return outer;
 	}
 
-	public Component getRelationshipCard()
+	public Component getRelationshipCard(final User relationship)
 	{
 		var outer = VerticalLayoutBuilder.create().tight().build();
 
-		var card = VerticalLayoutBuilder.create().green().margin(true).build();
-		card.add(HtmlLabelBuilder.create().text("Relationship").build());
+		FlipCard flipper = new FlipCard(HtmlLabelBuilder.create().text(relationship.getFullName()).build(), HtmlLabelBuilder.create().text("Owner Details").build(), FlipCardVariant.CLICK);
+		flipper.setWidth("100%");
+
+		var card = VerticalLayoutBuilder.create().green().build();
+		card.add(flipper);
 
 		outer.add(card);
 
@@ -100,5 +107,4 @@ public class DashboardView extends TapestryRouterViewSkeleton<DashboardView> imp
 
 		return outer;
 	}
-
 }
