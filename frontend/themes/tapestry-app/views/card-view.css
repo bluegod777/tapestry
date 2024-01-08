@@ -3,6 +3,24 @@
 	
 }
 
+.user-summary-card .title
+{
+	font-weight : 900;
+}
+
+.user-summary-card .birthdate
+{
+	white-space : nowrap;
+	font-size : var(--lumo-font-size-s);
+}
+
+.user-summary-card .educational-progress-gauge
+{
+	width : 250px;
+	height : 200px;
+	align-self: center;
+}
+
 .user-summary-card .profile-image
 {
   flex-shrink: 0;

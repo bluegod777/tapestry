@@ -24,9 +24,9 @@ public class UserDetailCard extends TapestryCardSkeleton<User>
 		this.setSpacing(false);
 
 		// The user's name
-		final var name = HtmlLabelBuilder.create().large().text(this.getSource().getFullName()).build();
+		final var name = HtmlLabelBuilder.create().large().widthFull().className("title").text(this.getSource().getFullName()).build();
 
-		final var birthdate = HtmlLabelBuilder.create().text(this.getSource().getBirthdate() != null ? CalendarUtils.format(this.getSource().getBirthdate()) : "").build();
+		final var birthdate = HtmlLabelBuilder.create().className("birthdate").text(this.getSource().getBirthdate() != null ? CalendarUtils.format(this.getSource().getBirthdate(), "MMM dd, yyyy") : "").build();
 
 		final var phone = HtmlLabelBuilder.create().text(this.getSource().getMobilePhoneNumber()).build();
 
@@ -35,7 +35,9 @@ public class UserDetailCard extends TapestryCardSkeleton<User>
 		/* @formatter:off */
 
 		return HorizontalLayoutBuilder.create().tight()
-				.add( VerticalLayoutBuilder.create().tight().add( name, birthdate, phone, email ).build() )
+				.add( VerticalLayoutBuilder.create().tight().add(
+					HorizontalLayoutBuilder.create().add(name, birthdate).build(),
+					phone, email ).build() )
 			.build();
 
 		/* @formatter:on */

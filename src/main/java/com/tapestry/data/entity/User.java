@@ -3,6 +3,7 @@ package com.tapestry.data.entity;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,11 +48,21 @@ public class User extends AbstractEntity
 	private String profilePictureUrl;
 
 	@Builder.Default
-	private List<User> children = new ArrayList<>();;
+	private List<User> children = new ArrayList<>();
 
 	// -------------------------------------------------------------------
 	// Our stuff
 	// -------------------------------------------------------------------
+	public int getEducationalProgress()
+	{
+		return new Random().nextInt((90 - 25) + 1) + 25;
+	}
+
+	public boolean isParent()
+	{
+		return !this.getChildren().isEmpty();
+	}
+
 	public String getFullName()
 	{
 		return String.format("%s %s", this.getFirstName(), this.getLastName());
