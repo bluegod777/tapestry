@@ -1,5 +1,6 @@
 package com.tapestry.services;
 
+import com.tapestry.views.auth.LoginEntity;
 import com.tapestry.views.auth.RegistrationEntity;
 
 public class AuthenticationService {
@@ -18,7 +19,7 @@ public class AuthenticationService {
     //
   }
 
-  public void login(String phone, String password) {
+  public void login(LoginEntity payload) {
     //
   }
 }

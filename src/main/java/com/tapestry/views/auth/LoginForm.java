@@ -57,7 +57,7 @@ public class LoginForm extends FormLayout {
       // TODO: send registration async? Or event? Or what?
       // Don't know what this is or how to get it
       // binder.getBean(), but it has the value of the form, validated
-      authService.login("nick", "pw");
+      authService.login(binder.getBean());
 
       // TODO: handle invalid passwords
     }
