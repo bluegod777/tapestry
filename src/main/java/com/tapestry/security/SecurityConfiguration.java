@@ -2,43 +2,53 @@ package com.tapestry.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.tapestry.views.login.LoginSignupView;
+import com.tapestry.views.auth.LoginView;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 
-@SuppressWarnings("deprecation")
+// TODO: we'll need to customize this to, not use VaadinWebSecutiry? This isn't designed
+// to be used as a token to api authentication, but it's own internal server authentication.
+// Begs the question, do we need a public API..
+// @see https://dzone.com/articles/spring-security-authentication
+
 @EnableWebSecurity
 @Configuration
-public class SecurityConfiguration extends VaadinWebSecurity
-{
+public class SecurityConfiguration extends VaadinWebSecurity {
 
-	@Bean
-	public PasswordEncoder passwordEncoder()
-	{
-		// return new BCryptPasswordEncoder();
-
-		return NoOpPasswordEncoder.getInstance();
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests(auth -> auth.requestMatchers(
+				AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/images/*.*")).permitAll());
+		super.configure(http);
+		setLoginView(http, LoginView.class);
 	}
 
-	@SuppressWarnings("removal")
-	@Override
-	protected void configure(HttpSecurity http) throws Exception
-	{
-		// http.authorizeHttpRequests(authz -> authz.requestMatchers("/images/*.png").permitAll().requestMatchers("/line-awesome/**/*.svg").permitAll().anyRequest().authenticated());
+	@Bean
+	UserDetailsService users() {
+		// 'password'
+		final String pw = "{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW";
 
-		http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/images/*.png")).permitAll();
+		UserDetails user = User.builder()
+				.username("user")
+				.password(pw)
+				.roles("USER")
+				.build();
 
-		// Icons from the line-awesome addon
-		http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/line-awesome/**/*.svg")).permitAll();
+		UserDetails admin = User.builder()
+				.username("admin")
+				.password(pw)
+				.roles("USER", "ADMIN")
+				.build();
 
-		super.configure(http);
-
-		this.setLoginView(http, LoginSignupView.class);
+		return new InMemoryUserDetailsManager(user, admin);
 	}
 
 }
