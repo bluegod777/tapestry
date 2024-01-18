@@ -1,14 +1,8 @@
 package com.tapestry.views.auth;
 
-import org.springframework.security.access.method.P;
-
 import com.tapestry.security.SecurityService;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -27,7 +21,7 @@ public class RegistrationView extends VerticalLayout implements BeforeEnterObser
 	public RegistrationView(SecurityService auth) {
 		this.auth = auth;
 		addClassName("register-view");
-		setSizeFull();
+		setMinHeight("100%");
 		setAlignItems(Alignment.CENTER);
 		setJustifyContentMode(JustifyContentMode.CENTER);
 
