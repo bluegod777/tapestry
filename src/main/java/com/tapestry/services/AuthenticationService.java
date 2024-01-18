@@ -17,4 +17,8 @@ public class AuthenticationService {
   public void register(RegistrationEntity payload) {
     //
   }
+
+  public void login(String phone, String password) {
+    //
+  }
 }

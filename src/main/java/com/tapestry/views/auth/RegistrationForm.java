@@ -17,7 +17,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 
 public class RegistrationForm extends FormLayout {
-  private Binder<RegistrationEntity> binder;
+  private final Binder<RegistrationEntity> binder = new Binder<>(RegistrationEntity.class);
 
   @Autowired()
   private AuthenticationService authService;
@@ -28,8 +28,6 @@ public class RegistrationForm extends FormLayout {
     setMaxWidth("312px");
     addClassName("align-self-center");
     addClassName("p-4");
-
-    binder = new Binder<>(RegistrationEntity.class);
 
     H2 heading = new H2("Register");
     Paragraph subtext = new Paragraph("Create a free Tapestry account");
@@ -85,6 +83,8 @@ public class RegistrationForm extends FormLayout {
       // Don't know what this is or how to get it
       // binder.getBean(), but it has the value of the form, validated
       authService.register(binder.getBean());
+
+      // TODO: handle invalid responses, e.g. taken usernames
     }
   }
 

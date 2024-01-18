@@ -39,7 +39,5 @@ public class RegistrationView extends VerticalLayout implements BeforeEnterObser
 		if (auth.loggedIn()) {
 			event.forwardTo("");
 		}
-
-		// this.login.setError(event.getLocation().getQueryParameters().getParameters().containsKey("error"));
 	}
 }
