@@ -9,6 +9,13 @@ public class AuthenticationService {
 
   HttpClient httpClient = new HttpClient();
 
+  // TODO: handling errors generically for the app as well as specific use
+  // conditions
+  // .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
+  // throw new MyCustomRuntimeException(response.getStatusCode(),
+  // response.getHeaders())
+  // })
+
   /**
    * Register a new user
    * 
@@ -44,6 +51,10 @@ public class AuthenticationService {
   }
 
   public void getCurrentUser() {
+    //
+  }
 
+  public void usernameExists() {
+    // /users/isAccountAlreadyInUse
   }
 }
