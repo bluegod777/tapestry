@@ -1,6 +1,6 @@
 package com.tapestry.views.common.cards.user;
 
-import com.tapestry.data.entity.User;
+import com.tapestry.data.entity.UserOld;
 import com.tapestry.data.repositories.TapestryRepository;
 import com.tapestry.security.AuthenticatedUser;
 import com.tapestry.utils.CalendarUtils;
@@ -10,9 +10,9 @@ import com.tapestry.views.common.builders.VerticalLayoutBuilder;
 import com.tapestry.views.common.views.TapestryCardSkeleton;
 import com.vaadin.flow.component.Component;
 
-public class UserDetailCard extends TapestryCardSkeleton<User>
+public class UserDetailCard extends TapestryCardSkeleton<UserOld>
 {
-	public UserDetailCard(final User source, AuthenticatedUser authenticatedUser, final TapestryRepository repository)
+	public UserDetailCard(final UserOld source, AuthenticatedUser authenticatedUser, final TapestryRepository repository)
 	{
 		super(source, authenticatedUser, repository);
 	}

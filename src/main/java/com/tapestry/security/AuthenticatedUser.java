@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.tapestry.data.entity.User;
+import com.tapestry.data.entity.UserOld;
 import com.tapestry.data.repositories.TapestryRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 
@@ -27,7 +27,7 @@ public class AuthenticatedUser
 	}
 
 	// @Transactional
-	public Optional<User> get()
+	public Optional<UserOld> get()
 	{
 		switch (this.authenticationContext.getAuthenticatedUser(UserDetails.class).get().getUsername())
 		{
