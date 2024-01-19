@@ -15,6 +15,7 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class RegistrationForm extends FormLayout {
   private final Binder<RegistrationEntity> binder = new Binder<>(RegistrationEntity.class);
@@ -71,7 +72,7 @@ public class RegistrationForm extends FormLayout {
         .bind(RegistrationEntity::getPassword, RegistrationEntity::setPassword);
 
     Button submitBtn = new Button("Create Account", ev -> submitHandler());
-    submitBtn.addClassName("mt-4");
+    submitBtn.addClassNames(LumoUtility.Margin.Top.LARGE);
     submitBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
     add(formTitle, firstNameField, lastNameField, emailField, phoneField, passwordField, submitBtn);

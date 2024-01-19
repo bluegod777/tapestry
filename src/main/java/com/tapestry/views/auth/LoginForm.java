@@ -13,6 +13,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.textfield.Autocomplete;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class LoginForm extends FormLayout {
   private final Binder<LoginEntity> binder = new Binder<>(LoginEntity.class);
@@ -46,7 +47,7 @@ public class LoginForm extends FormLayout {
         .bind(LoginEntity::getPassword, LoginEntity::setPassword);
 
     Button submitBtn = new Button("Login", ev -> submitHandler());
-    submitBtn.addClassName("mt-4");
+    submitBtn.addClassNames(LumoUtility.Margin.Top.LARGE);
     submitBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
     add(formTitle, phoneField, passwordField, submitBtn);
