@@ -1,6 +1,6 @@
 package com.tapestry.views.common.views;
 
-import com.tapestry.data.entity.User;
+import com.tapestry.data.entity.UserOld;
 import com.tapestry.data.repositories.TapestryRepository;
 import com.tapestry.security.AuthenticatedUser;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -52,7 +52,7 @@ public abstract class TapestryRouterViewSkeleton<T extends TapestryRouterViewSke
 	// Some common things we do with the user
 	// -------------------------------------------------------------------
 	@Override
-	public User getTapestryUser()
+	public UserOld getTapestryUser()
 	{
 		return this.getAuthenticatedUser().get().get();
 	}

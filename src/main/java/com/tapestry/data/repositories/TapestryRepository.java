@@ -2,7 +2,7 @@ package com.tapestry.data.repositories;
 
 import org.springframework.stereotype.Repository;
 
-import com.tapestry.data.entity.User;
+import com.tapestry.data.entity.UserOld;
 import com.tapestry.utils.CalendarUtils;
 import com.tapestry.views.common.builders.ImageBuilder;
 
@@ -28,9 +28,9 @@ public class TapestryRepository
 	//
 	// We need something that can generate stuff for us
 	// -------------------------------------------------------------------
-	public static User getParent()
+	public static UserOld getParent()
 	{
-		User parent = User.builder().firstName("Sally").lastName("Parent").email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/super-mom.jpg").build();
+		UserOld parent = UserOld.builder().firstName("Sally").lastName("Parent").email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/super-mom.jpg").build();
 
 		parent.getChildren().add(TapestryRepository.getChildPreTeem());
 		parent.getChildren().add(TapestryRepository.getChildTeen());
@@ -39,23 +39,23 @@ public class TapestryRepository
 		return parent;
 	}
 
-	public static User getChildPreTeem()
+	public static UserOld getChildPreTeem()
 	{
-		User parent = User.builder().firstName("Johnnie").lastName("Child").birthdate(CalendarUtils.getInstance(2015, 1, 3)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/son-preteen.jpg").build();
+		UserOld parent = UserOld.builder().firstName("Johnnie").lastName("Child").birthdate(CalendarUtils.getInstance(2015, 1, 3)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/son-preteen.jpg").build();
 
 		return parent;
 	}
 
-	public static User getChildTeen()
+	public static UserOld getChildTeen()
 	{
-		User parent = User.builder().firstName("Dee").lastName("Child").birthdate(CalendarUtils.getInstance(2007, 5, 7)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/daughter-teen.jpg").build();
+		UserOld parent = UserOld.builder().firstName("Dee").lastName("Child").birthdate(CalendarUtils.getInstance(2007, 5, 7)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/daughter-teen.jpg").build();
 
 		return parent;
 	}
 
-	public static User getChildYoungAdult()
+	public static UserOld getChildYoungAdult()
 	{
-		User parent = User.builder().firstName("Ryan").lastName("Child").birthdate(CalendarUtils.getInstance(1999, 8, 16)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/son-young-adult.jpg").build();
+		UserOld parent = UserOld.builder().firstName("Ryan").lastName("Child").birthdate(CalendarUtils.getInstance(1999, 8, 16)).email("omey@tapestrycard.com").mobilePhoneNumber("3605613793").profilePictureUrl(ImageBuilder.ROOT + "avatars/son-young-adult.jpg").build();
 
 		return parent;
 	}

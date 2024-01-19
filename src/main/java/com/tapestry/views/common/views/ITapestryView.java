@@ -1,7 +1,7 @@
 package com.tapestry.views.common.views;
 
 import com.tapestry.data.dataservice.State;
-import com.tapestry.data.entity.User;
+import com.tapestry.data.entity.UserOld;
 import com.tapestry.utils.ValidateUtils;
 import com.tapestry.views.common.builders.DialogBuilder;
 import com.vaadin.flow.component.Component;
@@ -11,7 +11,7 @@ import com.vaadin.flow.component.textfield.TextField;
 
 public interface ITapestryView
 {
-	public User getTapestryUser();
+	public UserOld getTapestryUser();
 
 	default boolean validateFieldAsMobileNumber(final TextField mobileNumberField)
 	{

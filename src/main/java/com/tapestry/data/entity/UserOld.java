@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class User extends AbstractEntity
+public class UserOld extends AbstractEntity
 {
 
 	@NotNull
@@ -48,7 +48,7 @@ public class User extends AbstractEntity
 	private String profilePictureUrl;
 
 	@Builder.Default
-	private List<User> children = new ArrayList<>();
+	private List<UserOld> children = new ArrayList<>();
 
 	// -------------------------------------------------------------------
 	// Our stuff

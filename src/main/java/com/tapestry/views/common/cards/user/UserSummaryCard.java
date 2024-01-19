@@ -1,6 +1,6 @@
 package com.tapestry.views.common.cards.user;
 
-import com.tapestry.data.entity.User;
+import com.tapestry.data.entity.UserOld;
 import com.tapestry.data.repositories.TapestryRepository;
 import com.tapestry.security.AuthenticatedUser;
 import com.tapestry.views.common.builders.HorizontalLayoutBuilder;
@@ -21,9 +21,9 @@ import com.vaadin.flow.component.charts.model.Pane;
 import com.vaadin.flow.component.charts.model.PlotOptionsSolidgauge;
 import com.vaadin.flow.component.charts.model.YAxis;
 
-public class UserSummaryCard extends TapestryCardSkeleton<User>
+public class UserSummaryCard extends TapestryCardSkeleton<UserOld>
 {
-	public UserSummaryCard(final User source, AuthenticatedUser authenticatedUser, final TapestryRepository repository)
+	public UserSummaryCard(final UserOld source, AuthenticatedUser authenticatedUser, final TapestryRepository repository)
 	{
 		super(source, authenticatedUser, repository);
 	}
