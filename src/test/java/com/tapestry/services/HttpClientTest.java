@@ -1,17 +1,17 @@
 package com.tapestry.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.web.client.RestClient;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-@SpringBootTest
-@Import(
-{
-		HttpClientConfig.class
-})
 public class HttpClientTest
 {
-	@Autowired
-	RestClient restClient;
+
+	@Test
+	void accountInUse()
+	{
+		final HttpClient client = new HttpClient();
+		Assertions.assertTrue(client.isAccountInUse("7758309851"));
+		Assertions.assertFalse(client.isAccountInUse("9998309851"));
+	}
+
 }
