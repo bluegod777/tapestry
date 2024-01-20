@@ -6,6 +6,7 @@ import org.springframework.web.client.RestClient;
 
 import com.tapestry.services.types.AccountInUseRequest;
 
+@Deprecated
 public class HttpClient
 {
 	String bullUrl = "https://global-dev.ayt360.org/bull";

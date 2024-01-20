@@ -11,7 +11,7 @@ public class AuthenticationService
 {
 
 	@Autowired
-	HttpClient client;
+	UserClient client;
 
 	public void getCurrentUser()
 	{

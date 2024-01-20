@@ -1,0 +1,15 @@
+package com.tapestry.services.types;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.extern.jackson.Jacksonized;
+
+@Data
+@Builder
+@Jacksonized
+public class CreateUserRequest
+{
+	String emailAddress;
+	String mobileNumber;
+	String name;
+}
