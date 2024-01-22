@@ -1,19 +1,32 @@
 package com.tapestry.views;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.tapestry.services.user.UserService;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class MainLayout extends AppLayout {
+public class MainLayout extends AppLayout
+{
+
+	Logger logger = LoggerFactory.getLogger(MainLayout.class);
+
+	@Autowired
+	UserService userService;
 
 	private H2 viewTitle;
 
-	public MainLayout() {
+	public MainLayout()
+	{
 		this.addHeaderContent();
 	}
 
-	private void addHeaderContent() {
+	private void addHeaderContent()
+	{
 		this.viewTitle = new H2();
 		this.viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
 
@@ -21,12 +34,14 @@ public class MainLayout extends AppLayout {
 	}
 
 	@Override
-	protected void afterNavigation() {
+	protected void afterNavigation()
+	{
 		super.afterNavigation();
 		this.viewTitle.setText(this.getCurrentPageTitle());
 	}
 
-	private String getCurrentPageTitle() {
+	private String getCurrentPageTitle()
+	{
 		PageTitle title = this.getContent().getClass().getAnnotation(PageTitle.class);
 		return title == null ? "" : title.value();
 	}

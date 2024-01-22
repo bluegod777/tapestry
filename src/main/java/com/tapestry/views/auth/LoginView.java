@@ -12,17 +12,17 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@AnonymousAllowed @PageTitle("Tapestry - Login") @Route(value = "login")
-public class LoginView extends VerticalLayout implements BeforeEnterObserver
-{
+@AnonymousAllowed
+@PageTitle("Tapestry - Login")
+@Route(value = "login")
+public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
 	private final LoginForm loginForm = new LoginForm();
 
 	@Autowired
 	UserService userService;
 
-	public LoginView()
-	{
+	public LoginView() {
 		addClassName("login-view");
 		setMinHeight("100%");
 		setAlignItems(Alignment.CENTER);
@@ -38,10 +38,8 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver
 	}
 
 	@Override
-	public void beforeEnter(BeforeEnterEvent event)
-	{
-		if (userService.loggedIn())
-		{
+	public void beforeEnter(BeforeEnterEvent event) {
+		if (userService.loggedIn()) {
 			event.forwardTo("");
 		}
 	}
