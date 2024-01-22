@@ -29,14 +29,14 @@ public class DumpUtils
 
 	public static void dump(final int indent, final Object source)
 	{
-		DumpUtils.infof("TortoiseUtil::dump : [%s]", source.getClass().getSimpleName());
+		DumpUtils.infof("DumpUtil::dump : [%s]", source.getClass().getSimpleName());
 		DumpUtils.dumpClass(indent, source);
 
 	}
 
 	public static void dump(final Object source)
 	{
-		DumpUtils.infof("TortoiseUtil::dump : [%s]", source.getClass().getSimpleName());
+		DumpUtils.infof("DumpUtil::dump : [%s]", source.getClass().getSimpleName());
 
 		DumpUtils.dumpClass(0, source);
 
@@ -75,30 +75,27 @@ public class DumpUtils
 				{
 					if (value instanceof Calendar)
 					{
-						DumpUtils.infof(DumpUtils.indent(indent) + "> %s : %s", f.getName(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(((Calendar) value).toInstant()));
-					}
-					else if (value instanceof List)
+						DumpUtils.infof(DumpUtils.indent(indent) + "> %s : %s", f.getName(),
+								DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(((Calendar) value).toInstant()));
+					} else if (value instanceof List)
 					{
 						// Skip for the moment, done down below
-					}
-					else
+					} else
 					{
 						try
 						{
 							DumpUtils.infof(DumpUtils.indent(indent) + "> %s : %s", f.getName(), value.toString());
-						}
-						catch (final Exception e)
+						} catch (final Exception e)
 						{
-							DumpUtils.errorf(DumpUtils.indent(indent) + "> error dumping field : [%s][%s]", f.getName(), e.getMessage());
+							DumpUtils.errorf(DumpUtils.indent(indent) + "> error dumping field : [%s][%s]", f.getName(),
+									e.getMessage());
 						}
 					}
-				}
-				else
+				} else
 				{
 					DumpUtils.infof(DumpUtils.indent(indent) + "> %s : <null>", f.getName());
 				}
-			}
-			catch (final IllegalArgumentException | IllegalAccessException e)
+			} catch (final IllegalArgumentException | IllegalAccessException e)
 			{
 				System.out.println(f.getName());
 				e.printStackTrace();
@@ -122,13 +119,11 @@ public class DumpUtils
 					{
 						DumpUtils.dump(indent + 1, (List<?>) value, f.getName());
 					}
-				}
-				else
+				} else
 				{
 					DumpUtils.infof(DumpUtils.indent(indent) + "> %s : <null>", f.getName());
 				}
-			}
-			catch (final IllegalArgumentException | IllegalAccessException e)
+			} catch (final IllegalArgumentException | IllegalAccessException e)
 			{
 				e.printStackTrace();
 			}
