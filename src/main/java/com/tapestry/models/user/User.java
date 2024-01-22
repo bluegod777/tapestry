@@ -9,11 +9,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.jackson.Jacksonized;
 
-@Data @Builder @Jacksonized @JsonIgnoreProperties(ignoreUnknown = true)
+@Data
+@Builder
+@Jacksonized
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User
 {
 	boolean authenticated;
-	String name;
+	String firstName;
+	String lastName;
 	String recordId;
 	List<Role> roles;
 	String token;

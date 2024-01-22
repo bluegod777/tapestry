@@ -21,15 +21,19 @@ public class UserClientTest
 		Assertions.assertFalse(this.client.isAccountInUse("9998309851"));
 	}
 
+	@Test
 	void authenticate()
 	{
 		final var response = this.client.authenticate("7758309851", "abcdefg");
 		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 		final User user = response.getBody();
-		Assertions.assertEquals("Fred Barrie", user.getName());
+		Assertions.assertEquals("Fred", user.getFirstName());
+		Assertions.assertEquals("Barrie", user.getLastName());
+		Assertions.assertEquals("7758309851", user.getUserName());
 		Assertions.assertTrue(user.isAuthenticated());
 	}
 
+	@Test
 	void get()
 	{
 		var response = this.client.authenticate("7758309851", "abcdefg");
@@ -39,8 +43,25 @@ public class UserClientTest
 		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 
 		final User user = response.getBody();
-		Assertions.assertEquals("Fred Barrie", user.getName());
+		Assertions.assertEquals("Fred", user.getFirstName());
+		Assertions.assertEquals("Barrie", user.getLastName());
 		Assertions.assertTrue(user.isAuthenticated());
+	}
+
+	@Test
+	void logout()
+	{
+		var response = this.client.authenticate("7758309851", "abcdefg");
+		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
+
+		response = this.client.logout(response.getBody().getToken());
+		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
+
+		final User user = response.getBody();
+		Assertions.assertEquals("Fred", user.getFirstName());
+		Assertions.assertEquals("Barrie", user.getLastName());
+		Assertions.assertFalse(user.isAuthenticated());
+		Assertions.assertEquals("", user.getToken());
 	}
 
 	void sendOtp()
@@ -49,7 +70,8 @@ public class UserClientTest
 		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 
 		final User user = response.getBody();
-		Assertions.assertEquals("Fred Barrie", user.getName());
+		Assertions.assertEquals("Fred", user.getFirstName());
+		Assertions.assertEquals("Barrie", user.getLastName());
 		Assertions.assertFalse(user.isAuthenticated());
 		System.out.println(user.getToken());
 	}
@@ -63,7 +85,8 @@ public class UserClientTest
 		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 
 		final User user = response.getBody();
-		Assertions.assertEquals("Fred Barrie", user.getName());
+		Assertions.assertEquals("Fred", user.getFirstName());
+		Assertions.assertEquals("Barrie", user.getLastName());
 		Assertions.assertTrue(user.isAuthenticated());
 		System.out.println(user.getToken());
 	}
