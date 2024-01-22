@@ -16,8 +16,6 @@ import lombok.extern.jackson.Jacksonized;
 public class User
 {
 	boolean authenticated;
-	String firstName;
-	String lastName;
 	String recordId;
 	List<Role> roles;
 	String token;

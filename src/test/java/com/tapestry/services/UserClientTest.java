@@ -27,8 +27,6 @@ public class UserClientTest
 		final var response = this.client.authenticate("7758309851", "abcdefg");
 		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 		final User user = response.getBody();
-		Assertions.assertEquals("Fred", user.getFirstName());
-		Assertions.assertEquals("Barrie", user.getLastName());
 		Assertions.assertEquals("7758309851", user.getUserName());
 		Assertions.assertTrue(user.isAuthenticated());
 	}
@@ -43,8 +41,6 @@ public class UserClientTest
 		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 
 		final User user = response.getBody();
-		Assertions.assertEquals("Fred", user.getFirstName());
-		Assertions.assertEquals("Barrie", user.getLastName());
 		Assertions.assertTrue(user.isAuthenticated());
 	}
 
@@ -58,8 +54,6 @@ public class UserClientTest
 		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 
 		final User user = response.getBody();
-		Assertions.assertEquals("Fred", user.getFirstName());
-		Assertions.assertEquals("Barrie", user.getLastName());
 		Assertions.assertFalse(user.isAuthenticated());
 		Assertions.assertEquals("", user.getToken());
 	}
@@ -70,8 +64,6 @@ public class UserClientTest
 		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 
 		final User user = response.getBody();
-		Assertions.assertEquals("Fred", user.getFirstName());
-		Assertions.assertEquals("Barrie", user.getLastName());
 		Assertions.assertFalse(user.isAuthenticated());
 		System.out.println(user.getToken());
 	}
@@ -85,8 +77,6 @@ public class UserClientTest
 		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 
 		final User user = response.getBody();
-		Assertions.assertEquals("Fred", user.getFirstName());
-		Assertions.assertEquals("Barrie", user.getLastName());
 		Assertions.assertTrue(user.isAuthenticated());
 		System.out.println(user.getToken());
 	}
