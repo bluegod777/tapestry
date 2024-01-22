@@ -1,6 +1,8 @@
 package com.tapestry.views.auth;
 
-import com.tapestry.security.SecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.tapestry.services.user.UserService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -15,11 +17,12 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @Route(value = "login")
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
-	private final SecurityService auth;
 	private final LoginForm loginForm = new LoginForm();
 
-	public LoginView(SecurityService auth) {
-		this.auth = auth;
+	@Autowired
+	UserService userService;
+
+	public LoginView() {
 		addClassName("login-view");
 		setMinHeight("100%");
 		setAlignItems(Alignment.CENTER);
@@ -36,7 +39,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
-		if (auth.loggedIn()) {
+		if (userService.loggedIn()) {
 			event.forwardTo("");
 		}
 	}
