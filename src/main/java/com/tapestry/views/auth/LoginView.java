@@ -15,32 +15,38 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @AnonymousAllowed
 @PageTitle("Tapestry - Login")
 @Route(value = "login")
-public class LoginView extends VerticalLayout implements BeforeEnterObserver {
-
-	private final LoginForm loginForm = new LoginForm();
+public class LoginView extends VerticalLayout implements BeforeEnterObserver
+{
 
 	@Autowired
 	UserService userService;
 
-	public LoginView() {
-		addClassName("login-view");
-		setMinHeight("100%");
-		setAlignItems(Alignment.CENTER);
-		setJustifyContentMode(JustifyContentMode.CENTER);
+	private final LoginForm loginForm = new LoginForm();
 
-		Image logo = new Image("images/tapestry-logo-green.png", "Tapestry");
+	public LoginView()
+	{
+		this.addClassName("login-view");
+		this.setMinHeight("100%");
+		this.setAlignItems(Alignment.CENTER);
+		this.setJustifyContentMode(JustifyContentMode.CENTER);
+
+		final Image logo = new Image("images/tapestry-logo-green.png", "Tapestry");
 		logo.setWidth("250px");
 
-		Button signupButton = new Button("No account? Sign Up Now!",
-				ev -> getUI().ifPresent(ui -> ui.navigate("register")));
+		final Button signupButton = new Button("No account? Sign Up Now!", ev -> this.getUI().ifPresent(ui -> ui.navigate("register")));
 
-		add(logo, loginForm, signupButton);
+		this.add(logo, this.loginForm, signupButton);
 	}
 
 	@Override
-	public void beforeEnter(BeforeEnterEvent event) {
-		if (userService.loggedIn()) {
-			event.forwardTo("");
-		}
+	public void beforeEnter(final BeforeEnterEvent event)
+	{
+		this.userService.loggedIn((error, loggedIn) ->
+		{
+			if (!error && loggedIn != null && loggedIn.booleanValue())
+			{
+				event.forwardTo("");
+			}
+		});
 	}
 }

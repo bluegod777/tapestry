@@ -111,9 +111,9 @@ public class UserClient
 		}
 	}
 
-	public ResponseEntity<User> create(final String name, final String mobileNumber, final String emailAddress)
+	public ResponseEntity<User> create(final String firstName, final String lastName, final String mobileNumber, final String emailAddress)
 	{
-		final CreateUserRequest request = CreateUserRequest.builder().name(name).mobileNumber(mobileNumber).emailAddress(emailAddress).build();
+		final CreateUserRequest request = CreateUserRequest.builder().firstName(firstName).lastName(lastName).mobileNumber(mobileNumber).emailAddress(emailAddress).build();
 		return this.create(request);
 	}
 

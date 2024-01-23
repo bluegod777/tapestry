@@ -12,36 +12,42 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@AnonymousAllowed @PageTitle("Tapestry - Register") @Route(value = "register")
+@AnonymousAllowed
+@PageTitle("Tapestry - Register")
+@Route(value = "register")
 public class RegistrationView extends VerticalLayout implements BeforeEnterObserver
 {
-
-	private final RegistrationForm registrationForm = new RegistrationForm();
 
 	@Autowired
 	UserService userService;
 
+	private final RegistrationForm registrationForm = new RegistrationForm();
+
 	public RegistrationView()
 	{
-		addClassName("register-view");
-		setMinHeight("100%");
-		setAlignItems(Alignment.CENTER);
-		setJustifyContentMode(JustifyContentMode.CENTER);
+		this.addClassName("register-view");
+		this.setMinHeight("100%");
+		this.setAlignItems(Alignment.CENTER);
+		this.setJustifyContentMode(JustifyContentMode.CENTER);
 
-		Image logo = new Image("images/tapestry-logo-green.png", "Tapestry");
+		final Image logo = new Image("images/tapestry-logo-green.png", "Tapestry");
 		logo.setWidth("250px");
 
-		Button loginButton = new Button("Login", ev -> getUI().ifPresent(ui -> ui.navigate("login")));
+		final Button loginButton = new Button("Login", ev -> this.getUI().ifPresent(ui -> ui.navigate("login")));
 
-		add(logo, registrationForm, loginButton);
+		this.add(logo, this.registrationForm, loginButton);
 	}
 
 	@Override
-	public void beforeEnter(BeforeEnterEvent event)
+	public void beforeEnter(final BeforeEnterEvent event)
 	{
-		if (userService.loggedIn())
+		this.userService.loggedIn((error, loggedIn) ->
 		{
-			event.forwardTo("");
-		}
+			// @TODO: Not sure what is going on
+			if (!error && loggedIn != null && loggedIn.booleanValue())
+			{
+				event.forwardTo("");
+			}
+		});
 	}
 }

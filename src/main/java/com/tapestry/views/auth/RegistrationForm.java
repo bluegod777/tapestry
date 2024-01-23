@@ -19,73 +19,75 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class RegistrationForm extends FormLayout
 {
-  private final Binder<RegistrationEntity> binder = new Binder<>(RegistrationEntity.class);
+	@Autowired()
+	private UserService authService;
 
-  @Autowired()
-  private UserService authService;
+	private final Binder<RegistrationEntity> binder = new Binder<>(RegistrationEntity.class);
 
-  public RegistrationForm()
-  {
-    // Just do it for now
-    setWidth("312px");
-    setMaxWidth("312px");
-    addClassName("align-self-center");
-    addClassName("p-4");
+	public RegistrationForm()
+	{
+		// Just do it for now
+		this.setWidth("312px");
+		this.setMaxWidth("312px");
+		this.addClassName("align-self-center");
+		this.addClassName("p-4");
 
-    H2 heading = new H2("Register");
-    Paragraph subtext = new Paragraph("Create a free Tapestry account");
-    Div formTitle = new Div();
-    formTitle.add(heading, subtext);
+		final H2 heading = new H2("Register");
+		final Paragraph subtext = new Paragraph("Create a free Tapestry account");
+		final Div formTitle = new Div();
+		formTitle.add(heading, subtext);
 
-    TextField firstNameField = new TextField();
-    firstNameField.setLabel("First Name");
-    firstNameField.isRequired();
-    firstNameField.setAutocomplete(Autocomplete.GIVEN_NAME);
-    binder.forField(firstNameField).asRequired().bind(RegistrationEntity::getFirstName,
-        RegistrationEntity::setFirstName);
+		final TextField firstNameField = new TextField();
+		firstNameField.setLabel("First Name");
+		firstNameField.isRequired();
+		firstNameField.setAutocomplete(Autocomplete.GIVEN_NAME);
+		this.binder.forField(firstNameField).asRequired().bind(RegistrationEntity::getFirstName, RegistrationEntity::setFirstName);
 
-    TextField lastNameField = new TextField();
-    lastNameField.setLabel("Last Name");
-    lastNameField.isRequired();
-    lastNameField.setAutocomplete(Autocomplete.FAMILY_NAME);
-    binder.forField(lastNameField).asRequired().bind(RegistrationEntity::getLastName, RegistrationEntity::setLastName);
+		final TextField lastNameField = new TextField();
+		lastNameField.setLabel("Last Name");
+		lastNameField.isRequired();
+		lastNameField.setAutocomplete(Autocomplete.FAMILY_NAME);
+		this.binder.forField(lastNameField).asRequired().bind(RegistrationEntity::getLastName, RegistrationEntity::setLastName);
 
-    EmailField emailField = new EmailField();
-    emailField.setLabel("Email Address");
-    binder.forField(emailField).asRequired().bind(RegistrationEntity::getEmail, RegistrationEntity::setEmail);
+		final EmailField emailField = new EmailField();
+		emailField.setLabel("Email Address");
+		this.binder.forField(emailField).asRequired().bind(RegistrationEntity::getEmail, RegistrationEntity::setEmail);
 
-    PhoneNumberField phoneField = new PhoneNumberField();
-    phoneField.setLabel("Mobile Phone");
-    phoneField.setHelperText("We'll use this to verify your account");
-    binder.forField(phoneField).asRequired().bind(RegistrationEntity::getPhone, RegistrationEntity::setPhone);
+		final PhoneNumberField phoneField = new PhoneNumberField();
+		phoneField.setLabel("Mobile Phone");
+		phoneField.setHelperText("We'll use this to verify your account");
+		this.binder.forField(phoneField).asRequired().bind(RegistrationEntity::getPhone, RegistrationEntity::setPhone);
 
-    PasswordField passwordField = new PasswordField();
-    passwordField.setLabel("Password");
-    passwordField.setAutocomplete(Autocomplete.NEW_PASSWORD);
-    binder.forField(passwordField).asRequired().bind(RegistrationEntity::getPassword, RegistrationEntity::setPassword);
+		final PasswordField passwordField = new PasswordField();
+		passwordField.setLabel("Password");
+		passwordField.setAutocomplete(Autocomplete.NEW_PASSWORD);
+		this.binder.forField(passwordField).asRequired().bind(RegistrationEntity::getPassword, RegistrationEntity::setPassword);
 
-    Button submitBtn = new Button("Create Account", ev -> submitHandler());
-    submitBtn.addClassNames(LumoUtility.Margin.Top.LARGE);
-    submitBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+		final Button submitBtn = new Button("Create Account", ev -> this.submitHandler());
+		submitBtn.addClassNames(LumoUtility.Margin.Top.LARGE);
+		submitBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-    add(formTitle, firstNameField, lastNameField, emailField, phoneField, passwordField, submitBtn);
-  }
+		this.add(formTitle, firstNameField, lastNameField, emailField, phoneField, passwordField, submitBtn);
+	}
 
-  private void submitHandler()
-  {
-    if (binder.validate().isOk())
-    {
-      // TODO: send registration async? Or event? Or what?
-      // Don't know what this is or how to get it
-      // binder.getBean(), but it has the value of the form, validated
-      authService.register(binder.getBean());
+	public Binder<RegistrationEntity> getBinder()
+	{
+		return this.binder;
+	}
 
-      // TODO: handle invalid responses, e.g. taken usernames
-    }
-  }
+	private void submitHandler()
+	{
+		if (this.binder.validate().isOk())
+		{
+			// TODO: send registration async? Or event? Or what?
+			// Don't know what this is or how to get it
+			// binder.getBean(), but it has the value of the form, validated
+			this.authService.register(this.binder.getBean(), (error, user) ->
+			{
 
-  public Binder<RegistrationEntity> getBinder()
-  {
-    return binder;
-  }
+			});
+
+			// TODO: handle invalid responses, e.g. taken usernames
+		}
+	}
 }

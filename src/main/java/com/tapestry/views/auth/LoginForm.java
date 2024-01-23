@@ -17,55 +17,58 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class LoginForm extends FormLayout
 {
-  private final Binder<LoginEntity> binder = new Binder<>(LoginEntity.class);
+	@Autowired()
+	private UserService authService;
 
-  @Autowired()
-  private UserService authService;
+	private final Binder<LoginEntity> binder = new Binder<>(LoginEntity.class);
 
-  public LoginForm()
-  {
-    // Just do it for now
-    setWidth("312px");
-    setMaxWidth("312px");
-    addClassName("align-self-center");
-    addClassName("p-4");
+	public LoginForm()
+	{
+		// Just do it for now
+		this.setWidth("312px");
+		this.setMaxWidth("312px");
+		this.addClassName("align-self-center");
+		this.addClassName("p-4");
 
-    H2 heading = new H2("Login");
-    Paragraph subtext = new Paragraph("Login to your Tapestry account");
-    Div formTitle = new Div();
-    formTitle.add(heading, subtext);
+		final H2 heading = new H2("Login");
+		final Paragraph subtext = new Paragraph("Login to your Tapestry account");
+		final Div formTitle = new Div();
+		formTitle.add(heading, subtext);
 
-    PhoneNumberField phoneField = new PhoneNumberField();
-    phoneField.setLabel("Mobile Phone");
-    binder.forField(phoneField).asRequired().bind(LoginEntity::getPhone, LoginEntity::setPhone);
+		final PhoneNumberField phoneField = new PhoneNumberField();
+		phoneField.setLabel("Mobile Phone");
+		this.binder.forField(phoneField).asRequired().bind(LoginEntity::getPhone, LoginEntity::setPhone);
 
-    PasswordField passwordField = new PasswordField();
-    passwordField.setLabel("Password");
-    passwordField.setAutocomplete(Autocomplete.CURRENT_PASSWORD);
-    binder.forField(passwordField).asRequired().bind(LoginEntity::getPassword, LoginEntity::setPassword);
+		final PasswordField passwordField = new PasswordField();
+		passwordField.setLabel("Password");
+		passwordField.setAutocomplete(Autocomplete.CURRENT_PASSWORD);
+		this.binder.forField(passwordField).asRequired().bind(LoginEntity::getPassword, LoginEntity::setPassword);
 
-    Button submitBtn = new Button("Login", ev -> submitHandler());
-    submitBtn.addClassNames(LumoUtility.Margin.Top.LARGE);
-    submitBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+		final Button submitBtn = new Button("Login", ev -> this.submitHandler());
+		submitBtn.addClassNames(LumoUtility.Margin.Top.LARGE);
+		submitBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-    add(formTitle, phoneField, passwordField, submitBtn);
-  }
+		this.add(formTitle, phoneField, passwordField, submitBtn);
+	}
 
-  private void submitHandler()
-  {
-    if (binder.validate().isOk())
-    {
-      // TODO: send registration async? Or event? Or what?
-      // Don't know what this is or how to get it
-      // binder.getBean(), but it has the value of the form, validated
-      authService.login(binder.getBean());
+	public Binder<LoginEntity> getBinder()
+	{
+		return this.binder;
+	}
 
-      // TODO: handle invalid passwords
-    }
-  }
+	private void submitHandler()
+	{
+		if (this.binder.validate().isOk())
+		{
+			// TODO: send registration async? Or event? Or what?
+			// Don't know what this is or how to get it
+			// binder.getBean(), but it has the value of the form, validated
+			this.authService.login(this.binder.getBean(), (error, user) ->
+			{
 
-  public Binder<LoginEntity> getBinder()
-  {
-    return binder;
-  }
+			});
+
+			// TODO: handle invalid passwords
+		}
+	}
 }
