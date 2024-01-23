@@ -1,10 +1,13 @@
 package com.tapestry.services.user;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tapestry.views.auth.LoginEntity;
 import com.tapestry.views.auth.RegistrationEntity;
+import com.vaadin.flow.component.page.WebStorage;
 
 @Service
 public class UserService
@@ -13,9 +16,15 @@ public class UserService
   @Autowired
   UserClient client;
 
+  Logger logger = LoggerFactory.getLogger(UserService.class);
+
   public void getCurrentUser()
   {
-
+    // TODO: @fbarrie-knowtal, this is pretty common, where should it go
+    WebStorage.getItem("auth", token ->
+    {
+      this.logger.info(token);
+    });
   }
 
   /**
