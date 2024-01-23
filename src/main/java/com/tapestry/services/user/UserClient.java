@@ -41,7 +41,8 @@ public class UserClient
 
 			this.logIt("authenticate", response);
 			return response;
-		} catch (final Exception e)
+		}
+		catch (final Exception e)
 		{
 			this.logException("authenticate", e);
 			return new ResponseEntity<>((User) null, HttpStatusCode.valueOf(500));
@@ -72,7 +73,8 @@ public class UserClient
 			this.logIt("changePassword", response);
 
 			return response;
-		} catch (final Exception e)
+		}
+		catch (final Exception e)
 		{
 			this.logException("changePassword", e);
 			return new ResponseEntity<>((User) null, HttpStatusCode.valueOf(500));
@@ -81,8 +83,7 @@ public class UserClient
 
 	public ResponseEntity<User> changePassword(final String token, final String oldPassword, final String newPassword)
 	{
-		final ChangePasswordRequest request = ChangePasswordRequest.builder().oldPassword(oldPassword)
-				.newPassword(newPassword).build();
+		final ChangePasswordRequest request = ChangePasswordRequest.builder().oldPassword(oldPassword).newPassword(newPassword).build();
 		return this.changePassword(token, request);
 	}
 
@@ -102,7 +103,8 @@ public class UserClient
 
 			this.logIt("create", response);
 			return response;
-		} catch (final Exception e)
+		}
+		catch (final Exception e)
 		{
 			this.logException("create", e);
 			return new ResponseEntity<>((User) null, HttpStatusCode.valueOf(500));
@@ -111,8 +113,7 @@ public class UserClient
 
 	public ResponseEntity<User> create(final String name, final String mobileNumber, final String emailAddress)
 	{
-		final CreateUserRequest request = CreateUserRequest.builder().name(name).mobileNumber(mobileNumber)
-				.emailAddress(emailAddress).build();
+		final CreateUserRequest request = CreateUserRequest.builder().name(name).mobileNumber(mobileNumber).emailAddress(emailAddress).build();
 		return this.create(request);
 	}
 
@@ -132,7 +133,8 @@ public class UserClient
 			this.logIt("get", response);
 
 			return response;
-		} catch (final Exception e)
+		}
+		catch (final Exception e)
 		{
 			this.logException("get", e);
 			return new ResponseEntity<>((User) null, HttpStatusCode.valueOf(500));
@@ -161,7 +163,8 @@ public class UserClient
 			}
 
 			return Boolean.parseBoolean(response.getBody());
-		} catch (final Exception e)
+		}
+		catch (final Exception e)
 		{
 			this.logException("isAccountInUse", e);
 			return false;
@@ -173,6 +176,30 @@ public class UserClient
 		final AccountInUseRequest request = AccountInUseRequest.builder().userName(userName).build();
 		return this.isAccountInUse(request);
 
+	}
+
+	public ResponseEntity<User> logout(final String token)
+	{
+		try
+		{
+			// @formatter:off
+			final var response = this.client.get()
+				.uri("/users/logout")
+				.header("Authorization", token)
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.toEntity(User.class);
+			// @formatter:on
+
+			this.logIt("logout", response);
+
+			return response;
+		}
+		catch (final Exception e)
+		{
+			this.logException("logout", e);
+			return new ResponseEntity<>((User) null, HttpStatusCode.valueOf(500));
+		}
 	}
 
 	public ResponseEntity<User> sendOtp(final SendOtpRequest request)
@@ -192,7 +219,8 @@ public class UserClient
 			this.logIt("sendOtp", response);
 
 			return response;
-		} catch (final Exception e)
+		}
+		catch (final Exception e)
 		{
 			this.logException("sendOtp", e);
 			return new ResponseEntity<>((User) null, HttpStatusCode.valueOf(500));
@@ -229,7 +257,8 @@ public class UserClient
 			this.logIt("validateOtp", response);
 
 			return response;
-		} catch (final Exception e)
+		}
+		catch (final Exception e)
 		{
 			this.logException("validateOtp", e);
 			return new ResponseEntity<>((User) null, HttpStatusCode.valueOf(500));
