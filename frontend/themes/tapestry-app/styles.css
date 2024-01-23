@@ -1,28 +1,51 @@
-@import url('./main-layout.css');
-
-@import url('./views/card-view.css');
-@import url('./views/home-view.css');
-@import url('./views/about-view.css');
-
-/* 
-Global style values
----------------------
-Important to note to put the '!important' flag here'
-*/
-
 :root {
   --lumo-primary-color: rgba(0, 204, 102) !important;
   --lumo-primary-text-color: rgba(0, 204, 102) !important;
-
-  --flip-card-height: 100%;
-  --flip-card-transition-duration: 800ms;
-  --flip-card-border-radius: 4px;
-  --flip-card-box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-  --flip-card-background-color-front: white;
-  --flip-card-background-color-back: white;
-  --flip-card-transition-timing-function: ease;
 }
 
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl {
+  width: 100%;
+  padding-right: var(--lumo-space-m, 0.75em);
+  padding-left: var(--lumo-space-m, 0.75em);
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+  max-width: 1560px;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/**
+ * utils, that can be changed to use Vaadin utils
+ * @see https://vaadin.com/docs/latest/styling/lumo/utility-classes
+*/
 .align-self-center {
   align-self: center;
 }
