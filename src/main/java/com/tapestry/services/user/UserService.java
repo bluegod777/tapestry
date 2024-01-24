@@ -89,24 +89,28 @@ public class UserService extends ServiceSkeleton
 	 */
 	public void register(final RegistrationEntity payload, final ServiceCallBack<User> callBack)
 	{
-		this.execute(() ->
+		// this.execute(() ->
 		{
 			final CreateUserRequest request = CreateUserRequest.builder().emailAddress(payload.getEmail()).firstName(payload.getFirstName()).lastName(payload.getLastName()).mobileNumber(payload.getPhone()).build();
 			final var result = this.client.create(request);
 			this.updateStorage("register", result);
-			return result;
-		}, callBack);
+			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
+		}
+		// return result;
+		// }, callBack);
 	}
 
 	public void resetPassword(final String userName, final ServiceCallBack<User> callBack)
 	{
-		this.execute(() ->
+		// this.execute(() ->
 		{
 			final SendOtpRequest request = SendOtpRequest.builder().userName(userName).build();
 			final var result = this.client.sendOtp(request);
 			this.updateStorage("resetPassword", result);
-			return result;
-		}, callBack);
+			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
+		}
+		// return result;
+		// }, callBack);
 	}
 
 	private void updateStorage(final String title, final ResponseEntity<User> result)
