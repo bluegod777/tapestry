@@ -1,6 +1,7 @@
 package com.tapestry.views.auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.tapestry.components.PhoneNumberField;
 import com.tapestry.services.user.UserService;
@@ -17,13 +18,18 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class LoginForm extends FormLayout
 {
-	@Autowired()
-	private UserService authService;
-
 	private final Binder<LoginEntity> binder = new Binder<>(LoginEntity.class);
 
-	public LoginForm()
+	private final Logger logger = LoggerFactory.getLogger(LoginForm.class);
+
+	private final UserService userService;
+
+	public LoginForm(final UserService userService)
 	{
+		this.userService = userService;
+
+		this.binder.setBean(new LoginEntity());
+
 		// Just do it for now
 		this.setWidth("312px");
 		this.setMaxWidth("312px");
@@ -63,9 +69,10 @@ public class LoginForm extends FormLayout
 			// TODO: send registration async? Or event? Or what?
 			// Don't know what this is or how to get it
 			// binder.getBean(), but it has the value of the form, validated
-			this.authService.login(this.binder.getBean(), (error, user) ->
+			this.userService.login(this.binder.getBean(), (error, user) ->
 			{
-
+				this.logger.info("Error : {} ", error);
+				this.logger.info("User  : {} ", user);
 			});
 
 			// TODO: handle invalid passwords

@@ -59,13 +59,17 @@ public class UserService extends ServiceSkeleton
 	 */
 	public void login(final LoginEntity payload, final ServiceCallBack<User> callBack)
 	{
-		this.execute(() ->
+		// this.execute(() ->
 		{
-			final var request = AuthenticateRequest.builder().userName(payload.getPhone()).build();
+			final var request = AuthenticateRequest.builder().userName(payload.getPhone()).password(payload.getPassword()).build();
 			final var result = this.client.authenticate(request);
 			this.updateStorage("login", result);
-			return result;
-		}, callBack);
+
+			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
+		}
+
+		// return result;
+		// }, callBack);
 	}
 
 	public void logout(final ServiceCallBack<User> callBack)
