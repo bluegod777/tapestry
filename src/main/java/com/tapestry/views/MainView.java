@@ -1,8 +1,8 @@
 package com.tapestry.views;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 
+import com.tapestry.models.user.User;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -26,9 +26,9 @@ public class MainView extends VerticalLayout
 		// Button click listeners can be defined as lambda expressions
 		final Button button = new Button("Say hello", e ->
 		{
-			authContext.getAuthenticatedUser(UserDetails.class).ifPresent(details ->
+			authContext.getAuthenticatedUser(User.class).ifPresent(details ->
 			{
-				this.add(new Paragraph("hello " + details.getUsername()));
+				this.add(new Paragraph("hello " + details.getUsername() + " " + details.getToken()));
 			});
 
 		});
