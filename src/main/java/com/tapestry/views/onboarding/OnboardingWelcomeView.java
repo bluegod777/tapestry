@@ -31,7 +31,7 @@ public class OnboardingWelcomeView extends VerticalLayout
 			}
 			else
 			{
-				this.add(new H1("Welcome " + user.getUserName() + "!"));
+				this.add(new H1("Welcome " + user.getUsername() + "!"));
 			}
 		});
 	}
