@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 
 public abstract class ServiceSkeleton
@@ -12,9 +13,9 @@ public abstract class ServiceSkeleton
 	private final ExecutorService executor;
 	private final Logger logger;
 
-	protected ServiceSkeleton(final Logger logger)
+	protected ServiceSkeleton(final Class<?> clazz)
 	{
-		this.logger = logger;
+		this.logger = LoggerFactory.getLogger(clazz);
 		this.executor = Executors.newCachedThreadPool();
 	}
 

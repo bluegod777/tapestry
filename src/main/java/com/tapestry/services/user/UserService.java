@@ -2,7 +2,6 @@ package com.tapestry.services.user;
 
 import java.util.Optional;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +30,7 @@ public class UserService extends ServiceSkeleton
 
 	public UserService()
 	{
-		super(LoggerFactory.getLogger(UserService.class));
+		super(UserService.class);
 	}
 
 	public void getCurrentUser(final ServiceCallBack<User> callBack)
