@@ -12,9 +12,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@AnonymousAllowed
-@PageTitle("Tapestry - Register")
-@Route(value = "register")
+@AnonymousAllowed @PageTitle("Tapestry - Register") @Route(value = "register")
 public class RegistrationView extends VerticalLayout implements BeforeEnterObserver
 {
 

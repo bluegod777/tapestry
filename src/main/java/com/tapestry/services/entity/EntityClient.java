@@ -14,32 +14,33 @@ import com.tapestry.models.entity.Entity;
 import com.tapestry.services.ClientSkeleton;
 
 @Component
-public class EntityClient extends ClientSkeleton {
+public class EntityClient extends ClientSkeleton
+{
 
 	@Autowired
 	RestClient client;
-	
+
 	public EntityClient()
 	{
 		super(EntityClient.class);
 	}
 
 	Logger logger = LoggerFactory.getLogger(EntityClient.class);
-	
+
 	public ResponseEntity<Entity> update(String token, final Entity entity)
 	{
-		if ( token.isEmpty())
+		if (token.isEmpty())
 		{
 			warn("The Token cannot be the empty string.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-		if ( entity.getRecordId() == null || entity.getRecordId().isEmpty())
+
+		if (entity.getRecordId() == null || entity.getRecordId().isEmpty())
 		{
 			warn("The Entity Record ID cannot be NULL or the empty string.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
+
 		try
 		{
 			//@formatter:off
@@ -55,8 +56,7 @@ public class EntityClient extends ClientSkeleton {
 			this.logIt("update", response);
 
 			return response;
-		}
-		catch (final Exception e)
+		} catch (final Exception e)
 		{
 			this.logException("update", e);
 			return new ResponseEntity<>((Entity) null, HttpStatusCode.valueOf(500));
@@ -65,18 +65,18 @@ public class EntityClient extends ClientSkeleton {
 
 	public ResponseEntity<Entity> getEntity(final String token, String username)
 	{
-		if ( token.isEmpty())
+		if (token.isEmpty())
 		{
 			warn("The Token cannot be the empty string.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-		if ( username.isEmpty())
+
+		if (username.isEmpty())
 		{
 			warn("The Username cannot be the empty string.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
+
 		try
 		{
 			//@formatter:off
@@ -91,8 +91,7 @@ public class EntityClient extends ClientSkeleton {
 			this.logIt("getEntity", response);
 
 			return response;
-		}
-		catch (final Exception e)
+		} catch (final Exception e)
 		{
 			this.logException("getEntity", e);
 			return new ResponseEntity<>((Entity) null, HttpStatusCode.valueOf(500));
@@ -101,18 +100,18 @@ public class EntityClient extends ClientSkeleton {
 
 	public ResponseEntity<Entity> getEntityByRecordId(String token, final String recordId)
 	{
-		if ( token.isEmpty())
+		if (token.isEmpty())
 		{
 			warn("The Token cannot be the empty string.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-		if ( recordId.isEmpty())
+
+		if (recordId.isEmpty())
 		{
 			warn("The Record ID cannot be the empty string.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
+
 		try
 		{
 			//@formatter:off
@@ -127,8 +126,7 @@ public class EntityClient extends ClientSkeleton {
 			this.logIt("getEntity", response);
 
 			return response;
-		}
-		catch (final Exception e)
+		} catch (final Exception e)
 		{
 			this.logException("getEntity", e);
 			return new ResponseEntity<>((Entity) null, HttpStatusCode.valueOf(500));
