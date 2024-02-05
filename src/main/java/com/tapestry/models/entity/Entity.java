@@ -1,5 +1,6 @@
 package com.tapestry.models.entity;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,7 +22,7 @@ public class Entity
 	private String address;
 
 	@NotEmpty
-	private Calendar birthday;
+	private LocalDate birthday;
 
 	@NotEmpty
 	private String emailAddress;
