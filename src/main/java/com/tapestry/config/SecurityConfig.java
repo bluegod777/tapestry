@@ -9,11 +9,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.tapestry.views.auth.LoginView;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 
-// TODO: this is REQUIRED for vaadin to work. But we don't need it, and can't use it with
-// this middle man server, which means no @AnonymousAllowed, @RolesAllowed, etc. How to wire
-// this up to work with token authentication
-// @see https://dzone.com/articles/spring-security-authentication
-
 @EnableWebSecurity @Configuration
 public class SecurityConfig extends VaadinWebSecurity
 {

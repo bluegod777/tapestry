@@ -27,7 +27,7 @@ public class UserClientTest
 		final var response = this.client.authenticate("7758309851", "abcdefg");
 		Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 		final User user = response.getBody();
-		Assertions.assertEquals("7758309851", user.getUserName());
+		Assertions.assertEquals("7758309851", user.getUsername());
 		Assertions.assertTrue(user.isAuthenticated());
 	}
 
