@@ -13,18 +13,19 @@ import com.tapestry.models.entity.Entity;
 import com.tapestry.services.ClientSkeleton;
 
 @Component
-public class EntityClient extends ClientSkeleton {
+public class EntityClient extends ClientSkeleton
+{
 
 	@Autowired
 	RestClient client;
-	
+
 	public EntityClient()
 	{
 		super(EntityClient.class);
 	}
 
 	Logger logger = LoggerFactory.getLogger(EntityClient.class);
-	
+
 	public ResponseEntity<Entity> getEntity(final String token, String username)
 	{
 		try
@@ -41,8 +42,7 @@ public class EntityClient extends ClientSkeleton {
 			this.logIt("getEntity", response);
 
 			return response;
-		}
-		catch (final Exception e)
+		} catch (final Exception e)
 		{
 			this.logException("getEntity", e);
 			return new ResponseEntity<>((Entity) null, HttpStatusCode.valueOf(500));

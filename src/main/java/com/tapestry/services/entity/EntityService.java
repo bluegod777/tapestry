@@ -10,7 +10,8 @@ import com.tapestry.services.ServiceCallBack;
 import com.tapestry.services.ServiceSkeleton;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 
-public class EntityService extends ServiceSkeleton {
+public class EntityService extends ServiceSkeleton
+{
 
 	@Autowired
 	AuthenticationContext authContext;
@@ -18,14 +19,15 @@ public class EntityService extends ServiceSkeleton {
 	@Autowired
 	EntityClient client;
 
-	public EntityService() {
+	public EntityService()
+	{
 		super(EntityService.class);
 	}
-	
+
 	public void getEntity(final String userName, final ServiceCallBack<Entity> callBack)
 	{
 		final Optional<User> optional = this.authContext.getAuthenticatedUser(User.class);
-		if ( optional.isPresent())
+		if (optional.isPresent())
 		{
 			final var result = this.client.getEntity(optional.get().getToken(), userName);
 			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
