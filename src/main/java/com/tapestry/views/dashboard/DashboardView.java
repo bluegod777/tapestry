@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tapestry.components.Container;
 import com.tapestry.models.user.User;
+<<<<<<< HEAD
 import com.tapestry.services.entity.EntityService;
+=======
+>>>>>>> c6f12244bcfc989d9b9ff4019ed827655e530f7d
 import com.tapestry.views.AppLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
@@ -20,8 +23,12 @@ import jakarta.annotation.security.PermitAll;
 @Route(value = "", layout = AppLayout.class) @PermitAll
 public class DashboardView extends VerticalLayout
 {
+<<<<<<< HEAD
 
   public DashboardView(@Autowired final AuthenticationContext authContext, @Autowired final EntityService entityService)
+=======
+  public DashboardView(@Autowired final AuthenticationContext authContext)
+>>>>>>> c6f12244bcfc989d9b9ff4019ed827655e530f7d
   {
 
     Container container = new Container();
@@ -29,10 +36,14 @@ public class DashboardView extends VerticalLayout
     // User / parent
     authContext.getAuthenticatedUser(User.class).ifPresent(details ->
     {
+<<<<<<< HEAD
       entityService.getEntity(details.getUsername(), (error, entity) ->
       {
         container.add(new H1("Hey, " + entity.getFirstName()));
       });
+=======
+      container.add(new H1("Hey, " + details.getUsername()));
+>>>>>>> c6f12244bcfc989d9b9ff4019ed827655e530f7d
     });
 
     container.add(new Paragraph(
