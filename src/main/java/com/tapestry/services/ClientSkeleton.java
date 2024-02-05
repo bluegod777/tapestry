@@ -23,6 +23,26 @@ public abstract class ClientSkeleton
 		}
 	}
 
+	protected final void info(String format, Object... args)
+	{
+		this.logger.info(format, args);
+	}
+
+	protected final void warn(String format, Object... args)
+	{
+		this.logger.warn(format, args);
+	}
+
+	protected final void error(String format, Object... args)
+	{
+		this.logger.error(format, args);
+	}
+
+	protected final void debug(String format, Object... args)
+	{
+		this.logger.debug(format, args);
+	}
+
 	protected final void logException(final String title, final Exception e)
 	{
 		this.logger.warn("Error calling {} : {}", title, e.getMessage());

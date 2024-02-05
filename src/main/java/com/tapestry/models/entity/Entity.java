@@ -40,5 +40,4 @@ public class Entity
 	private String state;
 
 	private String type;
-
 }

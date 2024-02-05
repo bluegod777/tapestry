@@ -1,8 +1,10 @@
 package com.tapestry.views.auth;
 
-import com.tapestry.services.user.UserService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.login.LoginForm;
+import com.vaadin.flow.component.login.LoginI18n;
+import com.vaadin.flow.component.login.LoginI18n.Form;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -18,12 +20,16 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver
 
 	private final LoginForm loginForm;
 
-	private final UserService userService;
-
-	public LoginView(final UserService userService)
+	public LoginView()
 	{
-		this.userService = userService;
-		this.loginForm = new LoginForm(userService);
+		final LoginI18n i18n = LoginI18n.createDefault();
+		final Form form = i18n.getForm();
+		form.setTitle("Login to your Tapestry account");
+		form.setUsername("Mobile phone");
+		form.setSubmit("Login");
+
+		this.loginForm = new LoginForm(i18n);
+		this.loginForm.setAction("login");
 
 		this.addClassName("login-view");
 		this.setMinHeight("100%");
@@ -39,14 +45,11 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver
 	}
 
 	@Override
-	public void beforeEnter(final BeforeEnterEvent event)
+	public void beforeEnter(final BeforeEnterEvent beforeEnterEvent)
 	{
-		this.userService.loggedIn((error, loggedIn) ->
+		if (beforeEnterEvent.getLocation().getQueryParameters().getParameters().containsKey("error"))
 		{
-			if (!error && loggedIn != null && loggedIn.booleanValue())
-			{
-				event.forwardTo("");
-			}
-		});
+			this.loginForm.setError(true);
+		}
 	}
 }
