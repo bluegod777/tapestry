@@ -32,4 +32,14 @@ public class EntityService extends ServiceSkeleton {
 		}
 	}
 
+	public void update(final Entity entity, final ServiceCallBack<Entity> callBack)
+	{
+		final Optional<User> optional = this.authContext.getAuthenticatedUser(User.class);
+		if ( optional.isPresent())
+		{
+			final var result = this.client.update(optional.get().getToken(), entity);
+			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
+		}
+	}
+
 }
