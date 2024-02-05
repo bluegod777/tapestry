@@ -21,22 +21,6 @@ public class OnboardingWelcomeView extends VerticalLayout
 	public OnboardingWelcomeView(final UserService userService)
 	{
 
-		// final LoginEntity entity = new LoginEntity();
-		// entity.setPhone("7758309851");
-		// entity.setPassword("abcdefg");
-
-		// userService.login(entity, (error, user) ->
-		// {
-		// if (error)
-		// {
-		// this.add(new H1("ERROR!"));
-		// }
-		// else
-		// {
-		// this.add(new H1("Welcome " + user.getUserName() + "!"));
-		// }
-		// });
-
 		this.setAlignItems(Alignment.CENTER);
 		this.setJustifyContentMode(JustifyContentMode.CENTER);
 		this.setMinHeight("100%");
