@@ -3,6 +3,7 @@ package com.tapestry.services.entity;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.tapestry.models.entity.Entity;
 import com.tapestry.models.user.User;
@@ -10,6 +11,7 @@ import com.tapestry.services.ServiceCallBack;
 import com.tapestry.services.ServiceSkeleton;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 
+@Service
 public class EntityService extends ServiceSkeleton
 {
 
