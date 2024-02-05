@@ -26,12 +26,16 @@ public class EntityService extends ServiceSkeleton
 		super(EntityService.class);
 	}
 
-	public void getEntity(final String userName, final ServiceCallBack<Entity> callBack)
+	public void getEntity(final String username, final ServiceCallBack<Entity> callBack)
 	{
+		info("API Call: Get Entity");
+		info("    Username: %s", username);
+		
 		final Optional<User> optional = this.authContext.getAuthenticatedUser(User.class);
+		info("    Optional: %s", optional);
 		if (optional.isPresent())
 		{
-			final var result = this.client.getEntity(optional.get().getToken(), userName);
+			final var result = this.client.getEntity(optional.get().getToken(), username);
 			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
 		}
 	}

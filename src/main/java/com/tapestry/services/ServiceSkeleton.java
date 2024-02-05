@@ -18,6 +18,36 @@ public abstract class ServiceSkeleton
 		this.logger = LoggerFactory.getLogger(clazz);
 		this.executor = Executors.newCachedThreadPool();
 	}
+	
+	protected void info(String format, Object... args)
+	{
+		this.logger.info(String.format(format, args));
+	}
+
+	protected void info(String format, Object arg1)
+	{
+		this.logger.info(String.format(format, arg1));
+	}
+
+	protected void info(String format, Object arg1, Object arg2)
+	{
+		this.logger.info(String.format(format, arg1, arg2));
+	}
+
+	protected void debug(String format, Object... args)
+	{
+		this.logger.debug(format, args);
+	}
+
+	protected void warn(String format, Object... args)
+	{
+		this.logger.warn(format, args);
+	}
+
+	protected void error(String format, Object... args)
+	{
+		this.logger.error(format, args);
+	}
 
 	protected <V> void execute(final Callable<ResponseEntity<V>> callable, final ServiceCallBack<V> callBack)
 	{
