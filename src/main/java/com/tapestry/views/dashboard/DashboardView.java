@@ -31,7 +31,14 @@ public class DashboardView extends VerticalLayout
     {
       entityService.getEntity(details.getUsername(), (error, entity) ->
       {
-        container.add(new H1("Hey, " + entity.getFirstName()));
+        if (error)
+        {
+          // In DEV no entity, work in progress
+          container.add(new H1("Hey, " + details.getUsername()));
+        } else
+        {
+          container.add(new H1("Hey, " + entity.getFirstName()));
+        }
       });
     });
 
