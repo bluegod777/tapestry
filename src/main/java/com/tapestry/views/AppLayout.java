@@ -14,13 +14,10 @@ public class AppLayout extends VerticalLayout implements RouterLayout
 
 	Logger logger = LoggerFactory.getLogger(AppLayout.class);
 
-	@Autowired
-	UserService userService;
-
-	public AppLayout()
+	public AppLayout(@Autowired final UserService userService)
 	{
 		Container container = new Container();
-		container.add(new AppNavbar());
+		container.add(new AppNavbar(userService));
 
 		this.add(container);
 	}

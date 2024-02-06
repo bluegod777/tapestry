@@ -12,9 +12,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@AnonymousAllowed
-@PageTitle("Tapestry - Login")
-@Route(value = "login")
+@AnonymousAllowed @PageTitle("Tapestry - Login") @Route(value = "login")
 public class LoginView extends VerticalLayout implements BeforeEnterObserver
 {
 
@@ -24,7 +22,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver
 	{
 		final LoginI18n i18n = LoginI18n.createDefault();
 		final Form form = i18n.getForm();
-		form.setTitle("Login to your Tapestry account");
+		form.setTitle("Login");
 		form.setUsername("Mobile phone");
 		form.setSubmit("Login");
 
@@ -39,7 +37,8 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver
 		final Image logo = new Image("images/tapestry-logo-green.png", "Tapestry");
 		logo.setWidth("250px");
 
-		final Button signupButton = new Button("No account? Sign Up Now!", ev -> this.getUI().ifPresent(ui -> ui.navigate("register")));
+		final Button signupButton = new Button("No account? Sign Up Now!",
+				ev -> this.getUI().ifPresent(ui -> ui.navigate("register")));
 
 		this.add(logo, this.loginForm, signupButton);
 	}
