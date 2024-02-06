@@ -25,9 +25,9 @@ public class DashboardChildCardList extends VerticalLayout
     cardList.setSpacing(true);
 
     // TODO: get and loop
-    cardList.add(new DashboardChildCard());
-    cardList.add(new DashboardChildCard());
-    cardList.add(new DashboardChildCard());
+    cardList.add(new DashboardChildCard("1"));
+    cardList.add(new DashboardChildCard("2"));
+    cardList.add(new DashboardChildCard("3"));
 
     this.add(cardList);
   }
