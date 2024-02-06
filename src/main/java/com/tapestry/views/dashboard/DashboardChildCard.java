@@ -1,5 +1,6 @@
 package com.tapestry.views.dashboard;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
@@ -11,12 +12,18 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class DashboardChildCard extends VerticalLayout
 {
-  public DashboardChildCard()
+  public DashboardChildCard(final String entityId)
   {
     this.setHeight("300px");
     this.setWidth("230px");
     this.setMinWidth("230px");
     this.addClassName("dashboard-child-card");
+
+    // On click navigate to child
+    this.addClickListener(ev ->
+    {
+      UI.getCurrent().navigate("child/" + entityId);
+    });
 
     VerticalLayout top = new VerticalLayout();
     top.setPadding(false);
