@@ -29,8 +29,7 @@ public class RegistrationForm extends FormLayout
 		// Just do it for now
 		this.setWidth("312px");
 		this.setMaxWidth("312px");
-		this.addClassName("align-self-center");
-		this.addClassName("p-4");
+		this.addClassNames("align-self-center", "p-4");
 
 		final H2 heading = new H2("Register");
 		final Paragraph subtext = new Paragraph("Create a free Tapestry account");
@@ -41,13 +40,15 @@ public class RegistrationForm extends FormLayout
 		firstNameField.setLabel("First Name");
 		firstNameField.isRequired();
 		firstNameField.setAutocomplete(Autocomplete.GIVEN_NAME);
-		this.binder.forField(firstNameField).asRequired().bind(RegistrationEntity::getFirstName, RegistrationEntity::setFirstName);
+		this.binder.forField(firstNameField).asRequired().bind(RegistrationEntity::getFirstName,
+				RegistrationEntity::setFirstName);
 
 		final TextField lastNameField = new TextField();
 		lastNameField.setLabel("Last Name");
 		lastNameField.isRequired();
 		lastNameField.setAutocomplete(Autocomplete.FAMILY_NAME);
-		this.binder.forField(lastNameField).asRequired().bind(RegistrationEntity::getLastName, RegistrationEntity::setLastName);
+		this.binder.forField(lastNameField).asRequired().bind(RegistrationEntity::getLastName,
+				RegistrationEntity::setLastName);
 
 		final EmailField emailField = new EmailField();
 		emailField.setLabel("Email Address");
@@ -61,7 +62,8 @@ public class RegistrationForm extends FormLayout
 		final PasswordField passwordField = new PasswordField();
 		passwordField.setLabel("Password");
 		passwordField.setAutocomplete(Autocomplete.NEW_PASSWORD);
-		this.binder.forField(passwordField).asRequired().bind(RegistrationEntity::getPassword, RegistrationEntity::setPassword);
+		this.binder.forField(passwordField).asRequired().bind(RegistrationEntity::getPassword,
+				RegistrationEntity::setPassword);
 
 		final Button submitBtn = new Button("Create Account", ev -> this.submitHandler());
 		submitBtn.addClassNames(LumoUtility.Margin.Top.LARGE);
