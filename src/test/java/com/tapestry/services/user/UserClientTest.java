@@ -1,4 +1,4 @@
-package com.tapestry.services;
+package com.tapestry.services.user;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

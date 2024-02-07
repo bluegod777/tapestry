@@ -1,4 +1,4 @@
-package com.tapestry.services;
+package com.tapestry.services.content;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,22 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 
-import com.tapestry.models.entity.Entity;
-import com.tapestry.services.entity.EntityClient;
+import com.tapestry.models.content.Content;
 import com.tapestry.services.user.UserClient;
 
 @SpringBootTest
-public class EntityClientTest
-{
+public class ContentClientTest {
 
+	
 	@Autowired
-	final EntityClient client = new EntityClient();
-
+	final ContentClient client = new ContentClient();
+	
 	@Autowired
 	final UserClient userClient = new UserClient();
 
 	@Test
-	void testGetEntity()
+	public void crudTest()
 	{
 		String token;
 
@@ -33,25 +32,32 @@ public class EntityClientTest
 			token = result.getBody().getToken();
 			assertTrue(!token.isEmpty(), "The token should not be empty.");
 		}
-
-		Entity entity;
-
-		{
-			var result2 = client.getEntity(token, "7758309851");
-			assertEquals(HttpStatus.OK, result2.getStatusCode(), "The status code should be OK");
-
-			entity = result2.getBody();
-		}
+		
+		Content content;
 
 		{
-			var result = client.getEntityByRecordId(token, entity.getRecordId());
+			//@formatter:off
+			var newContent = Content.builder()
+					.category("CATEGORY")
+					.content("The quick brown fox jumps over the lazy dog.".getBytes())
+					.contentType("text/plain")
+					.contentURI("http://www.google.com/")
+					.maxAge(99)
+					.minAge(12)
+					.summary("SUMMARY")
+					.title("TITLE")
+					.build();
+			//@formatter:on
+			
+			var result = client.add(token, newContent);
 			assertEquals(HttpStatus.OK, result.getStatusCode(), "The status code should be OK");
+			
+			content = result.getBody();
 		}
-
 		{
-			var result = client.update(token, entity);
+			var result = client.delete(token, content);
 			assertEquals(HttpStatus.OK, result.getStatusCode(), "The status code should be OK");
 		}
 	}
-
+	
 }

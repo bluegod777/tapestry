@@ -13,11 +13,15 @@ import lombok.extern.jackson.Jacksonized;
 
 // Note: this maps to the MothEntityEAO object
 
-@Data @Builder @Jacksonized @JsonIgnoreProperties(ignoreUnknown = true) @Getter @Setter
+@Data 
+@Builder 
+@Jacksonized 
+@JsonIgnoreProperties(ignoreUnknown = true) 
+@Getter 
+@Setter
 public class Entity
 {
 
-	@NotEmpty
 	private String address;
 
 	@NotEmpty

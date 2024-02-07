@@ -1,4 +1,4 @@
-package com.tapestry.services;
+package com.tapestry.services.user;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
