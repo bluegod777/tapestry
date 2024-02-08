@@ -1,7 +1,10 @@
 package com.tapestry.models.content;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -14,25 +17,13 @@ import lombok.extern.jackson.Jacksonized;
 @JsonIgnoreProperties(ignoreUnknown = true) 
 @Getter 
 @Setter
-public class Content {
+public class ContentSearchResponse {
+	
+	
+	@NotEmpty
+	private List<Content> content;
+	
+	private Long id;
 
-
-	private String category;
-
-	private byte[] content;
-
-	private String contentType;
-
-	private String contentURI;
-
-	private int maxAge;
-
-	private int minAge;
-
-	private String recordId;
-
-	private String summary;
-
-	private String title;
 	
 }

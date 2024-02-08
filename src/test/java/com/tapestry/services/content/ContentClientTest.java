@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 
 import com.tapestry.models.content.Content;
+import com.tapestry.models.content.ContentSearchRequest;
 import com.tapestry.services.user.UserClient;
 
 @SpringBootTest
@@ -53,6 +54,15 @@ public class ContentClientTest {
 			assertEquals(HttpStatus.OK, result.getStatusCode(), "The status code should be OK");
 			
 			content = result.getBody();
+		}
+		{
+			var request = ContentSearchRequest.builder()
+					.category("CATEGORY")
+					.build();
+			
+			var response = client.getContent(token, request);
+			assertEquals(HttpStatus.OK, response.getStatusCode(), "The status code should be OK");
+			assertTrue(!response.getBody().getContent().isEmpty());
 		}
 		{
 			var result = client.delete(token, content);

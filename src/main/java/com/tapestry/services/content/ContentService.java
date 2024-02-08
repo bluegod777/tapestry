@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tapestry.models.content.Content;
+import com.tapestry.models.content.ContentSearchRequest;
+import com.tapestry.models.content.ContentSearchResponse;
 import com.tapestry.models.user.User;
 import com.tapestry.services.ServiceCallBack;
 import com.tapestry.services.ServiceSkeleton;
@@ -47,6 +49,20 @@ public class ContentService extends ServiceSkeleton {
 		if (optional.isPresent())
 		{
 			final var result = this.client.delete(optional.get().getToken(), content);
+			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
+		}
+	}
+	
+	public void getContent(ContentSearchRequest request, ServiceCallBack<ContentSearchResponse> callBack)
+	{
+		info("API Call: Get Content");
+		info("    Request: %s", request);
+		
+		final Optional<User> optional = this.authContext.getAuthenticatedUser(User.class);
+		info("    Optional: %s", optional);
+		if (optional.isPresent())
+		{
+			final var result = this.client.getContent(optional.get().getToken(), request);
 			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
 		}
 	}

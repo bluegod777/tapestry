@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 import com.tapestry.models.content.Content;
+import com.tapestry.models.content.ContentSearchRequest;
+import com.tapestry.models.content.ContentSearchResponse;
 import com.tapestry.services.ClientSkeleton;
 
 @Component
@@ -88,6 +90,30 @@ public class ContentClient  extends ClientSkeleton
 		{
 			this.logException("delete", e);
 			return new ResponseEntity<>((Void) null, HttpStatusCode.valueOf(500));
+		}
+	}
+	
+	public ResponseEntity<ContentSearchResponse> getContent(String token, ContentSearchRequest request)
+	{
+		try
+		{
+			//@formatter:off
+			final var response = this.client.post()
+				.uri("/content/search")
+				.header("Authorization", token)
+				.accept(MediaType.APPLICATION_JSON)
+				.body(request)
+				.retrieve()
+				.toEntity(ContentSearchResponse.class);
+			//@formatter:on
+
+			this.logIt("search", response);
+
+			return response;
+		} catch (final Exception e)
+		{
+			this.logException("add", e);
+			return new ResponseEntity<>((ContentSearchResponse) null, HttpStatusCode.valueOf(500));
 		}
 	}
 	

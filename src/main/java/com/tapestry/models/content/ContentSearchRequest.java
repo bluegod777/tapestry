@@ -14,25 +14,18 @@ import lombok.extern.jackson.Jacksonized;
 @JsonIgnoreProperties(ignoreUnknown = true) 
 @Getter 
 @Setter
-public class Content {
+public class ContentSearchRequest {
 
+	private Integer blockSize;
 
 	private String category;
 
-	private byte[] content;
+	private Long id;
 
-	private String contentType;
+	private Integer maxAge;
 
-	private String contentURI;
+	private Integer minAge;
 
-	private int maxAge;
-
-	private int minAge;
-
-	private String recordId;
-
-	private String summary;
-
-	private String title;
+	private String weight;
 	
 }
