@@ -20,13 +20,14 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class RegistrationForm extends FormLayout
 {
-	@Autowired()
-	private UserService userService;
+	private final Binder<RegistrationEntity> binder;
+	private final UserService userService;
 
-	private final Binder<RegistrationEntity> binder = new Binder<>(RegistrationEntity.class);
-
-	public RegistrationForm()
+	public RegistrationForm(@Autowired() final UserService userService)
 	{
+		// NOTE: do we really have to do this every time?
+		this.userService = userService;
+
 		// Just do it for now
 		this.setWidth("355px");
 		this.setMaxWidth("355px");
@@ -37,12 +38,13 @@ public class RegistrationForm extends FormLayout
 		final Div formTitle = new Div();
 		formTitle.add(heading, subtext);
 
+		this.binder = new Binder<>(RegistrationEntity.class);
+
 		final TextField firstNameField = new TextField();
 		firstNameField.setLabel("First Name");
 		firstNameField.isRequired();
 		firstNameField.setAutocomplete(Autocomplete.GIVEN_NAME);
-		this.binder.forField(firstNameField).asRequired().bind(RegistrationEntity::getFirstName,
-				RegistrationEntity::setFirstName);
+		this.binder.forField(firstNameField).asRequired().bind("firstName");
 
 		final TextField lastNameField = new TextField();
 		lastNameField.setLabel("Last Name");
@@ -53,7 +55,7 @@ public class RegistrationForm extends FormLayout
 
 		final EmailField emailField = new EmailField();
 		emailField.setLabel("Email Address");
-		this.binder.forField(emailField).asRequired().bind(RegistrationEntity::getEmail, RegistrationEntity::setEmail);
+		this.binder.forField(emailField).asRequired().bind("email");
 
 		final PhoneNumberField phoneField = new PhoneNumberField();
 		phoneField.setLabel("Mobile Phone");
@@ -70,6 +72,8 @@ public class RegistrationForm extends FormLayout
 		submitBtn.addClassNames(LumoUtility.Margin.Top.LARGE);
 		submitBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
+		this.binder.bindInstanceFields(this);
+
 		this.add(formTitle, firstNameField, lastNameField, emailField, phoneField, passwordField, submitBtn);
 	}
 
@@ -82,6 +86,7 @@ public class RegistrationForm extends FormLayout
 	{
 		if (this.binder.validate().isOk())
 		{
+			// TODO: this is null, I don't know why
 			this.userService.register(this.binder.getBean(), (error, user) ->
 			{
 				if (error)

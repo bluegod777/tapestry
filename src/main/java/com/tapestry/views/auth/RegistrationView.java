@@ -18,13 +18,13 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 public class RegistrationView extends VerticalLayout implements BeforeEnterObserver
 {
 
-	@Autowired
-	UserService userService;
+	private final UserService userService;
+	private final RegistrationForm registrationForm;
 
-	private final RegistrationForm registrationForm = new RegistrationForm();
-
-	public RegistrationView()
+	public RegistrationView(@Autowired final UserService userService)
 	{
+		this.userService = userService;
+
 		this.addClassName("register-view");
 		this.setMinHeight("100%");
 		this.setAlignItems(Alignment.CENTER);
@@ -35,6 +35,7 @@ public class RegistrationView extends VerticalLayout implements BeforeEnterObser
 
 		final Button loginButton = new Button("Login Instead", ev -> this.getUI().ifPresent(ui -> ui.navigate("login")));
 
+		this.registrationForm = new RegistrationForm(this.userService);
 		this.add(logo, this.registrationForm, loginButton);
 	}
 
