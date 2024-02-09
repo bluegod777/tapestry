@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tapestry.components.PhoneNumberField;
 import com.tapestry.services.user.UserService;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -20,15 +21,15 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 public class RegistrationForm extends FormLayout
 {
 	@Autowired()
-	private UserService authService;
+	private UserService userService;
 
 	private final Binder<RegistrationEntity> binder = new Binder<>(RegistrationEntity.class);
 
 	public RegistrationForm()
 	{
 		// Just do it for now
-		this.setWidth("312px");
-		this.setMaxWidth("312px");
+		this.setWidth("355px");
+		this.setMaxWidth("355px");
 		this.addClassNames("align-self-center", "p-4");
 
 		final H2 heading = new H2("Register");
@@ -81,15 +82,17 @@ public class RegistrationForm extends FormLayout
 	{
 		if (this.binder.validate().isOk())
 		{
-			// TODO: send registration async? Or event? Or what?
-			// Don't know what this is or how to get it
-			// binder.getBean(), but it has the value of the form, validated
-			this.authService.register(this.binder.getBean(), (error, user) ->
+			this.userService.register(this.binder.getBean(), (error, user) ->
 			{
-
+				if (error)
+				{
+					// TODO: handle errors
+					System.err.println(error);
+				} else
+				{
+					UI.getCurrent().navigate("/welcome");
+				}
 			});
-
-			// TODO: handle invalid responses, e.g. taken usernames
 		}
 	}
 }
