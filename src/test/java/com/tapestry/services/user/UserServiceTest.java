@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.tapestry.services.user.UserService;
 import com.tapestry.views.auth.LoginEntity;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.internal.CurrentInstance;
