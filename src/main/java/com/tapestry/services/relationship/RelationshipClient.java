@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
+import com.tapestry.models.entity.relationships.RelationSearchResult;
 import com.tapestry.models.entity.relationships.Relationship;
+import com.tapestry.models.entity.relationships.RelationshipType;
 import com.tapestry.services.ClientSkeleton;
 
 @Component
@@ -22,7 +24,42 @@ public class RelationshipClient extends ClientSkeleton {
 	{
 		super(RelationshipClient.class);
 	}
+
 	
+	public ResponseEntity<RelationSearchResult> getRelationships(String token, String entityRecordId, RelationshipType type, boolean includeEntities, String weight)
+	{
+		if (token.isEmpty())
+		{
+			warn("The Token cannot be the empty string.");
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if (entityRecordId.isEmpty())
+		{
+			warn("The Entity Record ID cannot be the empty string.");
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		try
+		{
+			//@formatter:off
+			final var response = this.client.get()
+				.uri("/relationships/" + entityRecordId + "?type="+ type + "&includeEntities=" + includeEntities + "&weight=" + weight)
+				.header("Authorization", token)
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.toEntity(RelationSearchResult.class);
+			//@formatter:on
+
+			this.logIt("getRelationships", response);
+
+			return response;
+		} catch (final Exception e)
+		{
+			this.logException("getRelationships", e);
+			return new ResponseEntity<>((RelationSearchResult) null, HttpStatusCode.valueOf(500));
+		}
+	}
 	
 	public ResponseEntity<Relationship> addOrUpdate(String token, Relationship relationship)
 	{

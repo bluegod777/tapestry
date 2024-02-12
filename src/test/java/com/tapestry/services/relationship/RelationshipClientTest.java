@@ -50,6 +50,10 @@ public class RelationshipClientTest {
 			relationship = result.getBody();
 		}
 		{
+			var result = client.getRelationships(token, "11111111-2222-3333-4444-666666666666", RelationshipType.ALL, true, "HEAVY");
+			assertEquals(HttpStatus.OK, result.getStatusCode(), "The status code should be OK");
+		}
+		{
 			var result = client.delete(token, relationship);
 			assertEquals(HttpStatus.OK, result.getStatusCode(), "The status code should be OK");
 		}
