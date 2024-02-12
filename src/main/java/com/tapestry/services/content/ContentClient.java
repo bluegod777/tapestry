@@ -44,7 +44,8 @@ public class ContentClient  extends ClientSkeleton
 			//@formatter:off
 			final var response = this.client.post()
 				.uri("/content/add")
-				.header("Authorization", token)
+				.header(HEADER_AUTHORIZATION, token)
+				.header(HEADER_RECORD_EDITOR, getRecordEditor())
 				.accept(MediaType.APPLICATION_JSON)
 				.body(content)
 				.retrieve()
@@ -80,7 +81,8 @@ public class ContentClient  extends ClientSkeleton
 			//@formatter:off
 			this.client.delete()
 				.uri("/content/" + content.getRecordId())
-				.header("Authorization", token)
+				.header(HEADER_AUTHORIZATION, token)
+				.header(HEADER_RECORD_EDITOR, getRecordEditor())
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve();
 			//@formatter:on
@@ -100,7 +102,8 @@ public class ContentClient  extends ClientSkeleton
 			//@formatter:off
 			final var response = this.client.post()
 				.uri("/content/search")
-				.header("Authorization", token)
+				.header(HEADER_AUTHORIZATION, token)
+				.header(HEADER_RECORD_EDITOR, getRecordEditor())
 				.accept(MediaType.APPLICATION_JSON)
 				.body(request)
 				.retrieve()

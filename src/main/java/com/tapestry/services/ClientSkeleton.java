@@ -6,6 +6,10 @@ import org.springframework.http.ResponseEntity;
 
 public abstract class ClientSkeleton
 {
+	
+	protected final String HEADER_RECORD_EDITOR = "X-RecordEditor";
+	
+	protected final String HEADER_AUTHORIZATION = "Authorization";
 
 	Logger logger;
 
@@ -14,6 +18,11 @@ public abstract class ClientSkeleton
 		logger = LoggerFactory.getLogger(clazz);
 	}
 
+	protected String getRecordEditor()
+	{
+		return getClass().getSimpleName() + "@" + "Unkonwn";
+	}
+	
 	protected final void logIt(final String title, final ResponseEntity<?> response)
 	{
 		if (response.getStatusCode().isError())

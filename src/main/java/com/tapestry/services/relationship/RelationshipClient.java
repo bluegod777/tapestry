@@ -50,7 +50,8 @@ public class RelationshipClient extends ClientSkeleton {
 			//@formatter:off
 			final var response = this.client.post()
 				.uri("/relationships")
-				.header("Authorization", token)
+				.header(HEADER_AUTHORIZATION, token)
+				.header(HEADER_RECORD_EDITOR, getRecordEditor())
 				.accept(MediaType.APPLICATION_JSON)
 				.body(relationship)
 				.retrieve()
@@ -86,7 +87,8 @@ public class RelationshipClient extends ClientSkeleton {
 			//@formatter:off
 			this.client.delete()
 				.uri("/relationships/" + relationship.getRecordId())
-				.header("Authorization", token)
+				.header(HEADER_AUTHORIZATION, token)
+				.header(HEADER_RECORD_EDITOR, getRecordEditor())
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve();
 			//@formatter:on
@@ -118,7 +120,8 @@ public class RelationshipClient extends ClientSkeleton {
 			//@formatter:off
 			final var response = this.client.get()
 				.uri("/relationships/recordId/" + recordId)
-				.header("Authorization", token)
+				.header(HEADER_AUTHORIZATION, token)
+				.header(HEADER_RECORD_EDITOR, getRecordEditor())
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.toEntity(Relationship.class);
@@ -153,7 +156,8 @@ public class RelationshipClient extends ClientSkeleton {
 			//@formatter:off
 			final var response = this.client.get()
 				.uri("/relationships/" + entityRecordId + "?type="+ type + "&includeEntities=" + includeEntities + "&weight=" + weight)
-				.header("Authorization", token)
+				.header(HEADER_AUTHORIZATION, token)
+				.header(HEADER_RECORD_EDITOR, getRecordEditor())
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.toEntity(RelationSearchResult.class);

@@ -48,6 +48,7 @@ public class EntityClientTest
 		}
 
 		{
+			System.out.println("XXX Delete " + entity);
 			var result = client.update(token, entity);
 			assertEquals(HttpStatus.OK, result.getStatusCode(), "The status code should be OK");
 		}
