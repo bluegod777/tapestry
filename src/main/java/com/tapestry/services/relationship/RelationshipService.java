@@ -5,7 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.tapestry.models.entity.relationships.RelationSearchResult;
 import com.tapestry.models.entity.relationships.Relationship;
+import com.tapestry.models.entity.relationships.RelationshipType;
 import com.tapestry.models.user.User;
 import com.tapestry.services.ServiceCallBack;
 import com.tapestry.services.ServiceSkeleton;
@@ -48,6 +50,23 @@ public class RelationshipService extends ServiceSkeleton {
 		if (optional.isPresent())
 		{
 			final var result = this.client.delete(optional.get().getToken(), relationship);
+			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
+		}
+	}
+
+	public void getRelationships(String token, String entityRecordId, RelationshipType type, boolean includeEntities, String weight, final ServiceCallBack<RelationSearchResult> callBack)
+	{
+		info("API Call: Add/Update Relationships");
+		info("    Entity Record ID: %s", entityRecordId);
+		info("    Type            : %s", type);
+		info("    Include Entities: %s", includeEntities);
+		info("    Weight          : %s", weight);
+		
+		final Optional<User> optional = this.authContext.getAuthenticatedUser(User.class);
+		info("    Optional: %s", optional);
+		if (optional.isPresent())
+		{
+			final var result = this.client.getRelationships(optional.get().getToken(), entityRecordId, type, includeEntities, weight);
 			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
 		}
 	}

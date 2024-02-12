@@ -25,42 +25,6 @@ public class RelationshipClient extends ClientSkeleton {
 		super(RelationshipClient.class);
 	}
 
-	
-	public ResponseEntity<RelationSearchResult> getRelationships(String token, String entityRecordId, RelationshipType type, boolean includeEntities, String weight)
-	{
-		if (token.isEmpty())
-		{
-			warn("The Token cannot be the empty string.");
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		if (entityRecordId.isEmpty())
-		{
-			warn("The Entity Record ID cannot be the empty string.");
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		try
-		{
-			//@formatter:off
-			final var response = this.client.get()
-				.uri("/relationships/" + entityRecordId + "?type="+ type + "&includeEntities=" + includeEntities + "&weight=" + weight)
-				.header("Authorization", token)
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.toEntity(RelationSearchResult.class);
-			//@formatter:on
-
-			this.logIt("getRelationships", response);
-
-			return response;
-		} catch (final Exception e)
-		{
-			this.logException("getRelationships", e);
-			return new ResponseEntity<>((RelationSearchResult) null, HttpStatusCode.valueOf(500));
-		}
-	}
-	
 	public ResponseEntity<Relationship> addOrUpdate(String token, Relationship relationship)
 	{
 		if (token.isEmpty())
@@ -102,6 +66,38 @@ public class RelationshipClient extends ClientSkeleton {
 			return new ResponseEntity<>((Relationship) null, HttpStatusCode.valueOf(500));
 		}
 	}
+	
+	public ResponseEntity<Void> delete(String token, Relationship relationship)
+	{
+		if (token.isEmpty())
+		{
+			warn("The Token cannot be the empty string.");
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if (relationship.getRecordId().isEmpty())
+		{
+			warn("The Relationship Record ID cannot be the empty string.");
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		try
+		{
+			//@formatter:off
+			this.client.delete()
+				.uri("/relationships/" + relationship.getRecordId())
+				.header("Authorization", token)
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve();
+			//@formatter:on
+
+			return new ResponseEntity<>((Void) null, HttpStatusCode.valueOf(200));
+		} catch (final Exception e)
+		{
+			this.logException("delete", e);
+			return new ResponseEntity<>((Void) null, HttpStatusCode.valueOf(500));
+		}
+	}
 
 	public ResponseEntity<Relationship> getRelationshipByRecordId(String token, final String recordId)
 	{
@@ -138,7 +134,7 @@ public class RelationshipClient extends ClientSkeleton {
 		}
 	}
 
-	public ResponseEntity<Void> delete(String token, Relationship relationship)
+	public ResponseEntity<RelationSearchResult> getRelationships(String token, String entityRecordId, RelationshipType type, boolean includeEntities, String weight)
 	{
 		if (token.isEmpty())
 		{
@@ -146,27 +142,30 @@ public class RelationshipClient extends ClientSkeleton {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if (relationship.getRecordId().isEmpty())
+		if (entityRecordId.isEmpty())
 		{
-			warn("The Relationship Record ID cannot be the empty string.");
+			warn("The Entity Record ID cannot be the empty string.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		try
 		{
 			//@formatter:off
-			this.client.delete()
-				.uri("/relationships/" + relationship.getRecordId())
+			final var response = this.client.get()
+				.uri("/relationships/" + entityRecordId + "?type="+ type + "&includeEntities=" + includeEntities + "&weight=" + weight)
 				.header("Authorization", token)
 				.accept(MediaType.APPLICATION_JSON)
-				.retrieve();
+				.retrieve()
+				.toEntity(RelationSearchResult.class);
 			//@formatter:on
 
-			return new ResponseEntity<>((Void) null, HttpStatusCode.valueOf(200));
+			this.logIt("getRelationships", response);
+
+			return response;
 		} catch (final Exception e)
 		{
-			this.logException("delete", e);
-			return new ResponseEntity<>((Void) null, HttpStatusCode.valueOf(500));
+			this.logException("getRelationships", e);
+			return new ResponseEntity<>((RelationSearchResult) null, HttpStatusCode.valueOf(500));
 		}
 	}
 	
