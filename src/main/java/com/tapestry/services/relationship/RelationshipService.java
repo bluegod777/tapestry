@@ -14,7 +14,8 @@ import com.tapestry.services.ServiceSkeleton;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 
 @Component
-public class RelationshipService extends ServiceSkeleton {
+public class RelationshipService extends ServiceSkeleton
+{
 
 	@Autowired
 	AuthenticationContext authContext;
@@ -22,15 +23,17 @@ public class RelationshipService extends ServiceSkeleton {
 	@Autowired
 	RelationshipClient client;
 
-	public RelationshipService() {
+	public RelationshipService()
+	{
 		super(RelationshipService.class);
 	}
 
+	// TODO: (@amusedleg) unused `token` param, refactor signature
 	public void addOrUpdate(String token, Relationship relationship, final ServiceCallBack<Relationship> callBack)
 	{
 		info("API Call: Add/Update Relationship");
 		info("    Relationship: %s", relationship);
-		
+
 		final Optional<User> optional = this.authContext.getAuthenticatedUser(User.class);
 		info("    Optional: %s", optional);
 		if (optional.isPresent())
@@ -44,7 +47,7 @@ public class RelationshipService extends ServiceSkeleton {
 	{
 		info("API Call: Delete Relationship");
 		info("    Content: %s", relationship);
-		
+
 		final Optional<User> optional = this.authContext.getAuthenticatedUser(User.class);
 		info("    Optional: %s", optional);
 		if (optional.isPresent())
@@ -54,22 +57,24 @@ public class RelationshipService extends ServiceSkeleton {
 		}
 	}
 
-	public void getRelationships(String token, String entityRecordId, RelationshipType type, boolean includeEntities, String weight, final ServiceCallBack<RelationSearchResult> callBack)
+	// TODO: (@amusedleg) unused `token` param, refactor signature
+	public void getRelationships(String token, String entityRecordId, RelationshipType type, boolean includeEntities,
+			String weight, final ServiceCallBack<RelationSearchResult> callBack)
 	{
 		info("API Call: Add/Update Relationships");
 		info("    Entity Record ID: %s", entityRecordId);
 		info("    Type            : %s", type);
 		info("    Include Entities: %s", includeEntities);
 		info("    Weight          : %s", weight);
-		
+
 		final Optional<User> optional = this.authContext.getAuthenticatedUser(User.class);
 		info("    Optional: %s", optional);
 		if (optional.isPresent())
 		{
-			final var result = this.client.getRelationships(optional.get().getToken(), entityRecordId, type, includeEntities, weight);
+			final var result = this.client.getRelationships(optional.get().getToken(), entityRecordId, type, includeEntities,
+					weight);
 			callBack.onResponse(result.getStatusCode().isError(), result.getBody());
 		}
 	}
-	
 
 }
