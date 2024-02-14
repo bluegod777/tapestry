@@ -35,14 +35,11 @@ public class UserService extends ServiceSkeleton
 
 	public void getCurrentUser(final ServiceCallBack<User> callBack)
 	{
-		// TODO: @fbarrie-knowtal, this is pretty common, where should it go
-		// NOT SURE
 		final Optional<User> optional = this.authContext.getAuthenticatedUser(User.class);
 		if (optional.isPresent())
 		{
 			callBack.onResponse(false, optional.get());
-		}
-		else
+		} else
 		{
 			callBack.onResponse(true, null);
 		}
@@ -58,8 +55,7 @@ public class UserService extends ServiceSkeleton
 			this.updateStorage("getCurrentUser", result);
 			final boolean loggedIn = result.hasBody() ? result.getBody().isAuthenticated() : false;
 			callBack.onResponse(result.getStatusCode().isError(), Boolean.valueOf(loggedIn));
-		}
-		else
+		} else
 		{
 			callBack.onResponse(true, null);
 		}
@@ -67,12 +63,17 @@ public class UserService extends ServiceSkeleton
 
 	/**
 	 * Login with username/pw
+	 * 
+	 * This isn't used by the components, but by VaadinSecurity, POST'ing the
+	 * login form info to POST/login. If the result fails, that class will handle
+	 * redirecting to /login with an ?error param in the url.
 	 *
 	 * @public
 	 */
 	public void login(final LoginEntity payload, final ServiceCallBack<User> callBack)
 	{
-		final var request = AuthenticateRequest.builder().userName(payload.getPhone()).password(payload.getPassword()).build();
+		final var request = AuthenticateRequest.builder().userName(payload.getPhone()).password(payload.getPassword())
+				.build();
 		final var result = this.client.authenticate(request);
 		this.updateStorage("login", result);
 
@@ -99,9 +100,15 @@ public class UserService extends ServiceSkeleton
 	 */
 	public void register(final RegistrationEntity payload, final ServiceCallBack<User> callBack)
 	{
+		final CreateUserRequest request = CreateUserRequest.builder().emailAddress(payload.getEmail())
+				.firstName(payload.getFirstName()).lastName(payload.getLastName()).mobileNumber(payload.getPhone()).build();
 
-		final CreateUserRequest request = CreateUserRequest.builder().emailAddress(payload.getEmail()).firstName(payload.getFirstName()).lastName(payload.getLastName()).mobileNumber(payload.getPhone()).build();
 		final var result = this.client.create(request);
+
+		// TODO: if result fails, for anything, such as a `usernameExists`,
+		// updateStorage()
+		// will log the user out, redirecting them to /login, leaving the form they
+		// were on
 		this.updateStorage("register", result);
 		callBack.onResponse(result.getStatusCode().isError(), result.getBody());
 
@@ -111,6 +118,11 @@ public class UserService extends ServiceSkeleton
 	{
 		final SendOtpRequest request = SendOtpRequest.builder().userName(userName).build();
 		final var result = this.client.sendOtp(request);
+
+		// TODO: if result fails, for anything, such as a `usernameExists`,
+		// updateStorage()
+		// will log the user out, redirecting them to /login, leaving the form they
+		// were on
 		this.updateStorage("resetPassword", result);
 		callBack.onResponse(result.getStatusCode().isError(), result.getBody());
 	}
@@ -121,12 +133,12 @@ public class UserService extends ServiceSkeleton
 		{
 			this.getLogger().warn("Could not process {} : {}", title, result.getStatusCode());
 			this.authContext.logout();
-		}
-		else
+		} else
 		{
 			this.authContext.getAuthenticatedUser(User.class).ifPresent(user ->
 			{
-				SecurityContextHolder.getContext().setAuthentication(UsernamePasswordAuthenticationToken.authenticated(user, "", user.getAuthorities()));
+				SecurityContextHolder.getContext()
+						.setAuthentication(UsernamePasswordAuthenticationToken.authenticated(user, "", user.getAuthorities()));
 			});
 		}
 	}

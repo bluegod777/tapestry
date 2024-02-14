@@ -1,5 +1,7 @@
 package com.tapestry.views.auth;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tapestry.components.PhoneNumberField;
@@ -22,6 +24,7 @@ public class RegistrationForm extends FormLayout
 {
 	private final Binder<RegistrationEntity> binder;
 	private final UserService userService;
+	private final RegistrationEntity entity = new RegistrationEntity();
 
 	public RegistrationForm(@Autowired() final UserService userService)
 	{
@@ -38,7 +41,8 @@ public class RegistrationForm extends FormLayout
 		final Div formTitle = new Div();
 		formTitle.add(heading, subtext);
 
-		this.binder = new Binder<>(RegistrationEntity.class);
+		this.binder = new Binder<RegistrationEntity>(RegistrationEntity.class);
+		binder.setBean(this.entity);
 
 		final TextField firstNameField = new TextField();
 		firstNameField.setLabel("First Name");
@@ -50,29 +54,27 @@ public class RegistrationForm extends FormLayout
 		lastNameField.setLabel("Last Name");
 		lastNameField.isRequired();
 		lastNameField.setAutocomplete(Autocomplete.FAMILY_NAME);
-		this.binder.forField(lastNameField).asRequired().bind(RegistrationEntity::getLastName,
-				RegistrationEntity::setLastName);
+		this.binder.forField(lastNameField).asRequired().bind("lastName");
 
 		final EmailField emailField = new EmailField();
 		emailField.setLabel("Email Address");
+		emailField.setAutocomplete(Autocomplete.EMAIL);
 		this.binder.forField(emailField).asRequired().bind("email");
 
 		final PhoneNumberField phoneField = new PhoneNumberField();
 		phoneField.setLabel("Mobile Phone");
+		phoneField.setAutocomplete(Autocomplete.TEL);
 		phoneField.setHelperText("We'll use this to verify your account");
 		this.binder.forField(phoneField).asRequired().bind(RegistrationEntity::getPhone, RegistrationEntity::setPhone);
 
 		final PasswordField passwordField = new PasswordField();
 		passwordField.setLabel("Password");
 		passwordField.setAutocomplete(Autocomplete.NEW_PASSWORD);
-		this.binder.forField(passwordField).asRequired().bind(RegistrationEntity::getPassword,
-				RegistrationEntity::setPassword);
+		this.binder.forField(passwordField).asRequired().bind("password");
 
 		final Button submitBtn = new Button("Create Account", ev -> this.submitHandler());
 		submitBtn.addClassNames(LumoUtility.Margin.Top.LARGE);
 		submitBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-		this.binder.bindInstanceFields(this);
 
 		this.add(formTitle, firstNameField, lastNameField, emailField, phoneField, passwordField, submitBtn);
 	}
@@ -82,22 +84,39 @@ public class RegistrationForm extends FormLayout
 		return this.binder;
 	}
 
+	public Optional<RegistrationEntity> getBean()
+	{
+		return Optional.ofNullable(this.getBinder().getBean());
+	}
+
 	private void submitHandler()
 	{
-		if (this.binder.validate().isOk())
+		if (this.getBinder().validate().hasErrors())
 		{
-			// TODO: this is null, I don't know why
-			this.userService.register(this.binder.getBean(), (error, user) ->
+			// TODO: handle validation
+			System.err.println("Invalid");
+			return;
+		}
+
+		Optional<RegistrationEntity> optional = this.getBean();
+
+		if (optional.isPresent())
+		{
+
+			this.userService.register(this.entity, (error, user) ->
 			{
 				if (error)
 				{
 					// TODO: handle errors
-					System.err.println(error);
+					System.err.format("Form error {}", error);
 				} else
 				{
 					UI.getCurrent().navigate("/welcome");
 				}
 			});
+		} else
+		{
+			System.err.println("Not present, what does that mean");
 		}
 	}
 }
