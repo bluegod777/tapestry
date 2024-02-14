@@ -14,6 +14,12 @@ import lombok.extern.jackson.Jacksonized;
 
 // Note: this maps to the MothEntityEAO object
 
+/**
+ * TODO: define what is an entity, in relation to a parent and child, are both
+ * entities?
+ * 
+ * Creating a user, creates an entity.
+ */
 @Data
 @Builder
 @Jacksonized

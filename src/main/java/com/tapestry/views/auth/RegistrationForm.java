@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tapestry.components.PhoneNumberField;
 import com.tapestry.services.user.UserService;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -19,16 +20,17 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class RegistrationForm extends FormLayout
 {
-	@Autowired()
-	private UserService authService;
+	private final Binder<RegistrationEntity> binder;
+	private final UserService userService;
 
-	private final Binder<RegistrationEntity> binder = new Binder<>(RegistrationEntity.class);
-
-	public RegistrationForm()
+	public RegistrationForm(@Autowired() final UserService userService)
 	{
+		// NOTE: do we really have to do this every time?
+		this.userService = userService;
+
 		// Just do it for now
-		this.setWidth("312px");
-		this.setMaxWidth("312px");
+		this.setWidth("355px");
+		this.setMaxWidth("355px");
 		this.addClassNames("align-self-center", "p-4");
 
 		final H2 heading = new H2("Register");
@@ -36,12 +38,13 @@ public class RegistrationForm extends FormLayout
 		final Div formTitle = new Div();
 		formTitle.add(heading, subtext);
 
+		this.binder = new Binder<>(RegistrationEntity.class);
+
 		final TextField firstNameField = new TextField();
 		firstNameField.setLabel("First Name");
 		firstNameField.isRequired();
 		firstNameField.setAutocomplete(Autocomplete.GIVEN_NAME);
-		this.binder.forField(firstNameField).asRequired().bind(RegistrationEntity::getFirstName,
-				RegistrationEntity::setFirstName);
+		this.binder.forField(firstNameField).asRequired().bind("firstName");
 
 		final TextField lastNameField = new TextField();
 		lastNameField.setLabel("Last Name");
@@ -52,7 +55,7 @@ public class RegistrationForm extends FormLayout
 
 		final EmailField emailField = new EmailField();
 		emailField.setLabel("Email Address");
-		this.binder.forField(emailField).asRequired().bind(RegistrationEntity::getEmail, RegistrationEntity::setEmail);
+		this.binder.forField(emailField).asRequired().bind("email");
 
 		final PhoneNumberField phoneField = new PhoneNumberField();
 		phoneField.setLabel("Mobile Phone");
@@ -69,6 +72,8 @@ public class RegistrationForm extends FormLayout
 		submitBtn.addClassNames(LumoUtility.Margin.Top.LARGE);
 		submitBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
+		this.binder.bindInstanceFields(this);
+
 		this.add(formTitle, firstNameField, lastNameField, emailField, phoneField, passwordField, submitBtn);
 	}
 
@@ -81,15 +86,18 @@ public class RegistrationForm extends FormLayout
 	{
 		if (this.binder.validate().isOk())
 		{
-			// TODO: send registration async? Or event? Or what?
-			// Don't know what this is or how to get it
-			// binder.getBean(), but it has the value of the form, validated
-			this.authService.register(this.binder.getBean(), (error, user) ->
+			// TODO: this is null, I don't know why
+			this.userService.register(this.binder.getBean(), (error, user) ->
 			{
-
+				if (error)
+				{
+					// TODO: handle errors
+					System.err.println(error);
+				} else
+				{
+					UI.getCurrent().navigate("/welcome");
+				}
 			});
-
-			// TODO: handle invalid responses, e.g. taken usernames
 		}
 	}
 }

@@ -12,27 +12,30 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@AnonymousAllowed @PageTitle("Tapestry - Register") @Route(value = "register")
+@AnonymousAllowed
+@PageTitle("Tapestry - Register")
+@Route(value = "register")
 public class RegistrationView extends VerticalLayout implements BeforeEnterObserver
 {
 
-	@Autowired
-	UserService userService;
+	private final UserService userService;
+	private final RegistrationForm registrationForm;
 
-	private final RegistrationForm registrationForm = new RegistrationForm();
-
-	public RegistrationView()
+	public RegistrationView(@Autowired final UserService userService)
 	{
+		this.userService = userService;
+
 		this.addClassName("register-view");
 		this.setMinHeight("100%");
 		this.setAlignItems(Alignment.CENTER);
 		this.setJustifyContentMode(JustifyContentMode.CENTER);
 
 		final Image logo = new Image("images/tapestry-logo-green.png", "Tapestry");
-		logo.setWidth("250px");
+		logo.setWidth("405px");
 
-		final Button loginButton = new Button("Login", ev -> this.getUI().ifPresent(ui -> ui.navigate("login")));
+		final Button loginButton = new Button("Login Instead", ev -> this.getUI().ifPresent(ui -> ui.navigate("login")));
 
+		this.registrationForm = new RegistrationForm(this.userService);
 		this.add(logo, this.registrationForm, loginButton);
 	}
 
