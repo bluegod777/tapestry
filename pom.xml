@@ -119,6 +119,12 @@
 			<groupId>org.vaadin.addons.componentfactory</groupId>
 			<artifactId>vcf-input-mask</artifactId>
 			<version>2.1.1</version>
+    </dependency>
+    
+		<!-- Jackson support Java 8 data types -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 
 	</dependencies>

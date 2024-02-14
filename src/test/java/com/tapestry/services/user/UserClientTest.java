@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tapestry.models.user.User;
-import com.tapestry.services.user.UserClient;
 
 @SpringBootTest
 public class UserClientTest

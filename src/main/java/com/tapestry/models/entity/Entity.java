@@ -2,6 +2,7 @@ package com.tapestry.models.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.validation.constraints.NotEmpty;
@@ -31,6 +32,7 @@ public class Entity
 	private String address;
 
 	@NotEmpty
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 
 	@NotEmpty
@@ -50,4 +52,5 @@ public class Entity
 	private String state;
 
 	private String type;
+	
 }

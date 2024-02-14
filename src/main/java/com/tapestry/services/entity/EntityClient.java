@@ -46,7 +46,8 @@ public class EntityClient extends ClientSkeleton
 			//@formatter:off
 			final var response = this.client.post()
 				.uri("/entities/" + entity.getRecordId())
-				.header("Authorization", token)
+				.header(HEADER_AUTHORIZATION, token)
+				.header(HEADER_RECORD_EDITOR, getRecordEditor())
 				.accept(MediaType.APPLICATION_JSON)
 				.body(entity)
 				.retrieve()
@@ -82,7 +83,8 @@ public class EntityClient extends ClientSkeleton
 			//@formatter:off
 			final var response = this.client.get()
 				.uri("/entities/username/" + username)
-				.header("Authorization", token)
+				.header(HEADER_AUTHORIZATION, token)
+				.header(HEADER_RECORD_EDITOR, getRecordEditor())
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.toEntity(Entity.class);
@@ -117,7 +119,8 @@ public class EntityClient extends ClientSkeleton
 			//@formatter:off
 			final var response = this.client.get()
 				.uri("/entities/recordId/" + recordId)
-				.header("Authorization", token)
+				.header(HEADER_AUTHORIZATION, token)
+				.header(HEADER_RECORD_EDITOR, getRecordEditor())
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.toEntity(Entity.class);
