@@ -100,8 +100,15 @@ public class UserService extends ServiceSkeleton
 	 */
 	public void register(final RegistrationEntity payload, final ServiceCallBack<User> callBack)
 	{
-		final CreateUserRequest request = CreateUserRequest.builder().emailAddress(payload.getEmail())
-				.firstName(payload.getFirstName()).lastName(payload.getLastName()).mobileNumber(payload.getPhone()).build();
+		//@formatter:off
+		final CreateUserRequest request = CreateUserRequest.builder()
+				.emailAddress(payload.getEmail())
+				.firstName(payload.getFirstName())
+				.lastName(payload.getLastName())
+				.mobileNumber(payload.getPhone())
+				.password(payload.getPassword())
+				.build();
+		//@formatter:on
 
 		final var result = this.client.create(request);
 
